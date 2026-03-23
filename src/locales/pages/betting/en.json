@@ -2,50 +2,66 @@
   "title": "Sports Betting",
   "description": "Engage in thrilling sports betting. Explore diverse options and competitive odds for the best betting experience.",
   "h1": "Sports Betting",
-  "h1Description": "Dive into the exciting world of sports betting. Our platform offers a wide array of sports and betting options to cater to every enthusiast.",
-  "h1Image": "bets1",
-  "stats": [],
+  "h1Description": "Dive into the exciting world of sports betting. Our platform offers a wide array of sports and betting options to cater to every enthusiast. Enjoy competitive odds, live streaming, and real-time updates.",
+  "h1Image": "hero_betting.png",
   "blocks": [
     {
       "blockType": "welcome",
       "elements": [
-        { "type": "h2", "text": "Welcome to Sports Betting" },
-        { "type": "paragraph", "text": "The ultimate sports betting destination. A seamless and exhilarating betting experience with a diverse range of sports and events." },
-        { "type": "image", "src": "bets2" }
+        { "type": "title", "text": "Welcome to Sports Betting" },
+        { "type": "paragraph", "text": "The ultimate sports betting destination. A seamless and exhilarating betting experience with a diverse range of sports and events from around the globe." },
+        { "type": "paragraph", "text": "Whether you follow football, cricket, tennis, or niche sports, our platform provides comprehensive coverage with pre-match and in-play markets. Stay informed with live scores and statistics to make smarter bets." },
+        { "type": "image", "src": "/img/section_betting.png" }
       ]
     },
     {
       "blockType": "features",
       "elements": [
-        { "type": "h2", "text": "Key Betting Features" },
-        { "type": "paragraph", "text": "Live betting options, competitive odds, secure payment options and fast withdrawal process." },
+        { "type": "title", "text": "Key Betting Features" },
+        { "type": "paragraph", "text": "Our platform is built to deliver the best sports betting experience with cutting-edge technology and player-focused features." },
         {
           "type": "list",
           "items": [
-            { "title": "Live Betting", "description": "Place bets in real-time as the match progresses." },
-            { "title": "Competitive Odds", "description": "Enjoy some of the best odds available for various sports." },
-            { "title": "Secure Transactions", "description": "Bet confidently with secure payment methods." },
-            { "title": "Fast Withdrawals", "description": "Quickly access your winnings with efficient withdrawal." }
+            { "title": "Live Betting", "description": "Place bets in real-time as the match progresses with dynamic odds that update instantly." },
+            { "title": "Competitive Odds", "description": "Enjoy some of the best odds available across a wide range of sports and markets." },
+            { "title": "Secure Transactions", "description": "Bet confidently with encrypted payment methods and fast processing times." },
+            { "title": "Fast Withdrawals", "description": "Quickly access your winnings with efficient and hassle-free withdrawal options." }
           ]
         },
-        { "type": "image", "src": "bets3" },
         { "type": "button" }
       ]
     },
     {
       "blockType": "sports",
       "elements": [
-        { "type": "h2", "text": "Popular Sports for Betting" },
-        { "type": "paragraph", "text": "A vast selection of sports to satisfy every fan's passion." },
+        { "type": "title", "text": "Popular Sports for Betting" },
+        { "type": "paragraph", "text": "A vast selection of sports to satisfy every fan's passion. From major league tournaments to local matches, find the events that matter to you." },
         {
           "type": "list",
           "items": [
-            { "title": "Cricket", "description": "Place bets on local and international cricket matches." },
-            { "title": "Football", "description": "Bet on major leagues and tournaments worldwide." },
-            { "title": "Tennis", "description": "Explore betting options on grand slams and ATP tours." },
-            { "title": "Basketball", "description": "Wager on NBA games and other top basketball events." }
+            { "title": "Cricket", "description": "Place bets on local and international cricket matches including IPL, World Cup, and Test series." },
+            { "title": "Football", "description": "Bet on major leagues and tournaments worldwide including Premier League, La Liga, and Champions League." },
+            { "title": "Tennis", "description": "Explore betting options on Grand Slams, ATP and WTA tours, and challenger events." },
+            { "title": "Basketball", "description": "Wager on NBA games, EuroLeague, and other top basketball competitions around the world." }
           ]
         },
+        { "type": "button" }
+      ]
+    },
+    {
+      "blockType": "live_betting",
+      "elements": [
+        { "type": "title", "text": "In-Play Betting Experience" },
+        { "type": "paragraph", "text": "Take your betting to the next level with our comprehensive in-play platform. Watch the action unfold and place bets as the game progresses. Live statistics, match trackers, and real-time odds updates give you the edge you need." },
+        { "type": "paragraph", "text": "Our in-play section covers thousands of events daily across all major sports. Cash out early to lock in profits or minimize losses with our flexible cash-out feature available on selected markets." }
+      ]
+    },
+    {
+      "blockType": "getting_started",
+      "elements": [
+        { "type": "title", "text": "Getting Started with Sports Betting" },
+        { "type": "paragraph", "text": "New to sports betting? Our platform makes it easy to get started. Create your account in minutes, make a deposit using your preferred payment method, and start exploring the wide range of available markets." },
+        { "type": "paragraph", "text": "We provide helpful guides, tips, and tutorials to help beginners understand odds, market types, and betting strategies. Our support team is also available around the clock to assist with any questions." },
         { "type": "button" }
       ]
     }

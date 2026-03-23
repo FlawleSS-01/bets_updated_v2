@@ -1,11 +1,11 @@
 ---
 import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
-import { srcSetFrom, pickLargest } from "@/lib/srcset";
+import { deriveFormats } from "@/lib/picture";
 
 interface Props {
   title?: string;
   paragraphs?: string[];
-  imageSet?: Record<string, string>;
+  imageSrc?: string;
   imageAlt?: string;
   imageTitle?: string;
   showButton?: boolean;
@@ -15,18 +15,17 @@ interface Props {
 const {
   title = "",
   paragraphs = [],
-  imageSet,
+  imageSrc,
   imageAlt = "",
   imageTitle = "",
   showButton = false,
   reverse = false,
 } = Astro.props;
 
-const imgSrc = pickLargest(imageSet);
-const fallbackSrc = imageSet?.[360] ?? imgSrc;
+const fmt = imageSrc ? deriveFormats(imageSrc) : undefined;
 ---
 
-{(title || paragraphs.length > 0 || imageSet) && (
+{(title || paragraphs.length > 0 || imageSrc) && (
   <section class="vblock vmedia">
     <div class:list={["vcontainer vmedia__grid", reverse && "is-reverse"]}>
       <div class="vmedia__text">
@@ -47,20 +46,21 @@ const fallbackSrc = imageSet?.[360] ?? imgSrc;
 
       <div class="vmedia__media" aria-hidden="true">
         <div class="vmedia__card">
-          {imgSrc && (
-            <img
-              class="vmedia__img"
-              src={fallbackSrc}
-              srcset={srcSetFrom(imageSet)}
-              sizes="(max-width: 1020px) calc(100vw - 68px), 520px"
-              alt={imageAlt}
-              title={imageTitle}
-              loading="lazy"
-              decoding="async"
-              fetchpriority="low"
-              width="600"
-              height="336"
-            />
+          {fmt && (
+            <picture>
+              <source type="image/avif" srcset={fmt.avif} />
+              <source type="image/webp" srcset={fmt.webp} />
+              <img
+                class="vmedia__img"
+                src={fmt.original}
+                alt={imageAlt}
+                title={imageTitle}
+                loading="lazy"
+                decoding="async"
+                width="600"
+                height="336"
+              />
+            </picture>
           )}
         </div>
       </div>

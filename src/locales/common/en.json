@@ -5,7 +5,8 @@
     "login": "Login",
     "app": "App",
     "betting": "Bet",
-    "download": "Download"
+    "download": "Download",
+    "loginAction": "Login"
   },
   "footer": {
     "paymentMethodsTitle": "Available Payment Methods",
@@ -28,7 +29,7 @@
     "alt": "Welcome bonus banner"
   },
   "buttons": {
-    "download": "DOWNLOAD APP",
+    "download": "DOWNLOAD",
     "login": "LOGIN"
   },
   "faq": {
@@ -43,35 +44,24 @@
     ]
   },
   "imageDescription": {
-    "app": {
-      "app1": { "alt": "Mobile gaming experience with the app", "title": "App — Enjoy seamless gaming on your smartphone" },
-      "app2": { "alt": "Using the smartphone app during everyday life", "title": "App — Fast, responsive, and optimized for all devices" },
-      "app3": { "alt": "Live stats and sports features on mobile", "title": "Mobile App — Your complete hub for casino and sports" },
-      "app4": { "alt": "Casino chips and bonus elements for app rewards", "title": "App — Unlock exclusive bonuses available only in the app" }
+    "home": {
+      "hero_home.png": { "alt": "High-class gaming experience without limits", "title": "A high-class gaming experience without limits" },
+      "section_home.png": { "alt": "Exciting slot machines with lucky symbols", "title": "Slots — Thousands of thrilling machines await" }
     },
     "casino": {
-      "casino1": { "alt": "Premium online casino atmosphere", "title": "Casino — Step inside our high-end casino experience" },
-      "casino2": { "alt": "Professional dealer at the roulette table", "title": "Live Casino — Join thrilling real-dealer tables" },
-      "casino3": { "alt": "Vibrant slot machines with exciting themes", "title": "Slots — Thousands of exciting themes and jackpots" },
-      "casino4": { "alt": "Golden coins and spinning roulette wheel", "title": "Casino Games — Enjoy nonstop entertainment" }
+      "hero_casino.png": { "alt": "Premium online casino atmosphere", "title": "Casino — Step inside our high-end casino experience" },
+      "section_casino.png": { "alt": "Professional dealer at the roulette table", "title": "Live Casino — Join thrilling real-dealer tables" }
     },
     "betting": {
-      "bets1": { "alt": "Diverse game collection online", "title": "Games — Explore our rich library of casino classics" },
-      "bets2": { "alt": "Celebrating a winning moment while gaming", "title": "Games — Discover modern slots and table adventures" },
-      "bets3": { "alt": "Engaging live and instant-win games", "title": "Live Games — Take part in high-energy casino action" },
-      "bets4": { "alt": "Vibrant slot machine with winning icons", "title": "Slot Zone — Spin your way to exciting rewards" }
+      "hero_betting.png": { "alt": "Diverse sports betting collection", "title": "Betting — Explore our rich library of sports markets" },
+      "section_betting.png": { "alt": "Live sports betting with real-time updates", "title": "Betting — Experience live sports action" }
+    },
+    "app": {
+      "hero_app.png": { "alt": "Mobile gaming experience with the app", "title": "App — Enjoy seamless gaming on your smartphone" },
+      "section_app.png": { "alt": "Using the smartphone app during everyday life", "title": "App — Fast, responsive, and optimized for all devices" }
     },
     "login": {
-      "login1": { "alt": "Quick and easy login to your account", "title": "Login — Instantly access your secure account" },
-      "login2": { "alt": "Protected access system login prompt", "title": "Secure Login — Fast and safe account entry" },
-      "login3": { "alt": "Smooth re-entry process to your account", "title": "Member Login — Return to your personalized dashboard" }
-    },
-    "home": {
-      "main": { "alt": "Premier destination for online casino entertainment", "title": "Your premier destination for online casino entertainment" },
-      "main1": { "alt": "High-class gaming experience without limits", "title": "A high-class gaming experience without limits" },
-      "main2": { "alt": "Exciting slot machines with lucky symbols", "title": "Slots — Thousands of thrilling machines await" },
-      "main3": { "alt": "Winning sevens on a slot reel with gold coins", "title": "Jackpot Slots — Spin for massive rewards" },
-      "main4": { "alt": "Fully mobile-friendly casino experience", "title": "Mobile Casino — Play anytime, anywhere" }
+      "hero_login.png": { "alt": "Quick and easy login to your account", "title": "Login — Instantly access your secure account" }
     }
   }
 }

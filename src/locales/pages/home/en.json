@@ -3,32 +3,65 @@
   "description": "Uncover the ultimate gaming experience. Dive into a world of excitement and innovation.",
   "h1": "Your Gateway to Gaming",
   "h1Description": "Experience the thrill of gaming where innovation meets excitement. Our platform offers a diverse range of games, ensuring endless entertainment. Explore our secure and user-friendly interface.",
-  "h1Image": "main1",
-  "stats": [],
+  "h1Image": "hero_home.png",
   "blocks": [
     {
       "blockType": "welcome",
       "elements": [
-        { "type": "h2", "text": "Welcome to the Casino" },
+        { "type": "title", "text": "Welcome to the Casino" },
         { "type": "paragraph", "text": "Embark on a thrilling journey through the world of online gaming. Our platform is crafted to provide an exceptional gaming experience. Whether you are a seasoned player or new to the scene, we offer a welcoming environment for all." },
-        { "type": "image", "src": "main2" }
+        { "type": "paragraph", "text": "Discover a world of entertainment that combines cutting-edge technology with classic gaming traditions. Our carefully curated selection of games ensures there is something for every type of player." },
+        { "type": "image", "src": "/img/section_home.png" }
       ]
     },
     {
       "blockType": "features",
       "elements": [
-        { "type": "h2", "text": "Unmatched Features for Every Gamer" },
+        { "type": "title", "text": "Unmatched Features for Every Gamer" },
         { "type": "paragraph", "text": "We pride ourselves on offering a wide array of features that cater to every type of gamer. State-of-the-art technology ensures smooth gameplay and a seamless user experience. Enjoy a secure and reliable environment with 24/7 customer support." },
-        { "type": "image", "src": "main3" },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Fast Payouts", "description": "Withdrawals are processed quickly so you can enjoy your winnings without delay." },
+            { "title": "24/7 Support", "description": "Our dedicated team is always available to assist with any queries or issues." },
+            { "title": "Secure Platform", "description": "Advanced encryption and security protocols keep your data safe at all times." },
+            { "title": "Diverse Games", "description": "From slots to live dealer tables, explore a wide variety of gaming options." }
+          ]
+        },
         { "type": "button" }
       ]
     },
     {
       "blockType": "popular_games",
       "elements": [
-        { "type": "h2", "text": "Explore Our Popular Games" },
+        { "type": "title", "text": "Explore Our Popular Games" },
         { "type": "paragraph", "text": "Discover a selection of popular games that will keep you entertained for hours. Our extensive library includes a variety of slots, table games, and live dealer options." },
-        { "type": "image", "src": "main4" }
+        { "type": "paragraph", "text": "Each game is powered by leading software providers, ensuring high-quality graphics and fair play. Whether you prefer classic fruit machines or modern video slots, our collection has it all." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Slots", "description": "Spin the reels on hundreds of exciting slot games with diverse themes and bonus features." },
+            { "title": "Live Casino", "description": "Experience authentic casino action with professional dealers streaming in real time." },
+            { "title": "Table Games", "description": "Test your strategy with classic games like blackjack, roulette, and baccarat." }
+          ]
+        }
+      ]
+    },
+    {
+      "blockType": "promotions",
+      "elements": [
+        { "type": "title", "text": "Generous Promotions and Bonuses" },
+        { "type": "paragraph", "text": "Take advantage of our rewarding promotions designed to enhance your gaming experience. From welcome bonuses to loyalty rewards, we ensure our players always have something extra to look forward to." },
+        { "type": "paragraph", "text": "Our promotional offers are regularly updated to provide fresh and exciting opportunities. Check the promotions page frequently to never miss a deal that suits your style." },
+        { "type": "button" }
+      ]
+    },
+    {
+      "blockType": "responsible",
+      "elements": [
+        { "type": "title", "text": "Responsible Gaming" },
+        { "type": "paragraph", "text": "We are committed to promoting responsible gaming practices. Our platform provides tools and resources to help players maintain control over their gaming activities, including deposit limits and self-exclusion options." },
+        { "type": "paragraph", "text": "Gaming should always be a fun and enjoyable activity. If you ever feel that your gaming habits are becoming a concern, please reach out to our support team or visit our responsible gaming page for assistance." }
       ]
     }
   ]

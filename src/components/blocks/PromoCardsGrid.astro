@@ -1,20 +1,20 @@
 ---
 import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
-import { srcSetFrom, pickLargest } from "@/lib/srcset";
+import { deriveFormats } from "@/lib/picture";
 
 interface Props {
   title?: string;
   paragraphs?: string[];
   items?: { title: string; description: string }[];
-  imageSet?: Record<string, string>;
+  imageSrc?: string;
   imageAlt?: string;
   imageTitle?: string;
   showButton?: boolean;
 }
 
-const { title = "", paragraphs = [], items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const { title = "", paragraphs = [], items = [], imageSrc, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
 const desc = paragraphs?.[0] || "";
-const imgSrc = pickLargest(imageSet);
+const fmt = imageSrc ? deriveFormats(imageSrc) : undefined;
 
 let cards: { title: string; text: string }[] = [];
 if (Array.isArray(items) && items.length) {
@@ -36,9 +36,13 @@ if (Array.isArray(items) && items.length) {
       <div class="vpromo__grid">
         {cards.map((c) => (
           <article class="vpromo__card">
-            {imgSrc && (
+            {fmt && (
               <div class="vpromo__media">
-                <img class="vpromo__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+                <picture>
+                  <source type="image/avif" srcset={fmt.avif} />
+                  <source type="image/webp" srcset={fmt.webp} />
+                  <img class="vpromo__img" src={fmt.original} alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+                </picture>
               </div>
             )}
             <div class="vpromo__body">

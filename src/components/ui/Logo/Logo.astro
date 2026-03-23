@@ -1,13 +1,12 @@
 ---
 export interface Props {
-  lang: string;
   className?: string;
 }
 
-const { lang, className = "" } = Astro.props;
+const { className = "" } = Astro.props;
 ---
 
-<a href={`/${lang}`} class={className}>
+<a href="/" class={className}>
   <img
     src="/img/logo.webp"
     sizes="120px"

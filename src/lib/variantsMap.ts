@@ -8,8 +8,9 @@ export const PAGE_RULES: Record<string, Record<string, string | string[]>> = {
   casino: {
     welcome: "auto",
     features: "auto",
-    bonuses: "auto",
-    live_casino: "auto",
+    casino_games: "auto",
+    /** Same as original shablon: two-column promo cards + buttons (not random Section) */
+    bonuses: "promoCardsGrid",
   },
   betting: {
     features: "auto",

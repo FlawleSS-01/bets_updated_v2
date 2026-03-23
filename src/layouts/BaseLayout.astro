@@ -1,9 +1,8 @@
 ---
 import Header from "@/components/common/Header/Header.astro";
 import Footer from "@/components/common/Footer/Footer.astro";
-import { defaultLng, supportedLanguages } from "@/config/language";
+import { defaultLng } from "@/config/language";
 import { routes } from "@/config/routes";
-import { getPathWithoutLanguage } from "@/lib/getPathWithoutLang";
 import type { SchemaGraph } from "@/types/structure";
 import type { CommonTextsI } from "@/types/texts";
 import type { MetatagsI } from "@/components/common/MetaTags";
@@ -21,19 +20,14 @@ interface Props {
 
 const { schema, commonTexts, metatags } = Astro.props;
 
-const { lang } = Astro.params;
-const currentLang = lang || defaultLng;
-
-const currentPath = getPathWithoutLanguage(
-  Astro.url.pathname,
-  supportedLanguages,
-);
+const currentLang = defaultLng;
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 const navItems = Object.entries(routes).map(([key, cfg]) => ({
   key,
   label: commonTexts.header[key] || cfg.label,
-  href: `/${currentLang}/${key === "home" ? "" : key}`,
-  active: currentPath === `/${key}` || (key === "home" && currentPath === "/"),
+  href: key === "home" ? "/" : `/${key}`,
+  active: key === "home" ? pathname === "/" : pathname === `/${key}`,
 }));
 ---
 
@@ -59,12 +53,11 @@ const navItems = Object.entries(routes).map(([key, cfg]) => ({
       </main>
 
       <Header
-        lang={currentLang}
         navItems={navItems}
-        loginLabel={commonTexts.header.login || "Login"}
-        downloadLabel={commonTexts.header.download || "Download"}
+        loginLabel={commonTexts.buttons?.login || "LOGIN"}
+        downloadLabel={commonTexts.buttons?.download || "DOWNLOAD"}
       />
-      <Footer lang={currentLang} texts={commonTexts} />
+      <Footer texts={commonTexts} />
     </div>
 
     <script>

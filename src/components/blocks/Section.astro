@@ -1,13 +1,13 @@
 ---
 import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
-import { srcSetFrom, pickLargest } from "@/lib/srcset";
+import { deriveFormats } from "@/lib/picture";
 
 interface Props {
   title?: string;
   text?: string;
   paragraphs?: string[];
   listItems?: { title: string; description: string }[];
-  imageSet?: Record<string, string>;
+  imageSrc?: string;
   imageAlt?: string;
   imageTitle?: string;
   isMainTitle?: boolean;
@@ -21,7 +21,7 @@ const {
   text,
   paragraphs = [],
   listItems = [],
-  imageSet,
+  imageSrc,
   imageAlt = "",
   imageTitle = "",
   isMainTitle = false,
@@ -30,7 +30,8 @@ const {
   reverse = false,
 } = Astro.props;
 
-const imgSrc = pickLargest(imageSet);
+const fmt = imageSrc ? deriveFormats(imageSrc) : undefined;
+const refUrl = import.meta.env.PUBLIC_REF || "#";
 ---
 
 <section class="hYnoSImClkRQlNw">
@@ -39,20 +40,22 @@ const imgSrc = pickLargest(imageSet);
       {title && isMainTitle && <h1 class="sgsdgsd">{title}</h1>}
       {title && !isMainTitle && <h2 class="kFnVgmqaUEjdlHu">{title}</h2>}
 
-      {imgSrc && (
-        <a href="/go" rel="nofollow" class="jnGYfOsDyLXarre">
-          <img
-            src={imgSrc}
-            srcset={srcSetFrom(imageSet)}
-            sizes="(max-width: 360px) 100vw, (max-width: 920px) 420px, 600px"
-            alt={imageAlt}
-            title={imageTitle}
-            loading={imagePriority ? "eager" : "lazy"}
-            fetchpriority={imagePriority ? "high" : "low"}
-            decoding="async"
-            width="600"
-            height="336"
-          />
+      {fmt && (
+        <a href={refUrl} rel="nofollow" class="jnGYfOsDyLXarre" target="_blank">
+          <picture>
+            <source type="image/avif" srcset={fmt.avif} />
+            <source type="image/webp" srcset={fmt.webp} />
+            <img
+              src={fmt.original}
+              alt={imageAlt}
+              title={imageTitle}
+              loading={imagePriority ? "eager" : "lazy"}
+              fetchpriority={imagePriority ? "high" : "low"}
+              decoding="async"
+              width="600"
+              height="336"
+            />
+          </picture>
         </a>
       )}
 

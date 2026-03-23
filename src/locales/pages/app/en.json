@@ -2,53 +2,68 @@
   "title": "App - Mobile Experience",
   "description": "Explore the App for a seamless mobile experience. Discover its features and download easily.",
   "h1": "App - Your Gateway to Mobile Gaming",
-  "h1Description": "The App offers a comprehensive mobile gaming experience. Enjoy smooth navigation and a wide range of games at your fingertips.",
-  "h1Image": "app1",
-  "stats": [],
+  "h1Description": "The App offers a comprehensive mobile gaming experience. Enjoy smooth navigation, lightning-fast performance, and a wide range of games at your fingertips wherever you go.",
+  "h1Image": "hero_app.png",
   "blocks": [
     {
       "blockType": "welcome",
       "elements": [
-        { "type": "h2", "text": "Welcome to the App" },
+        { "type": "title", "text": "Welcome to the App" },
         { "type": "paragraph", "text": "Designed to bring the excitement of gaming to your mobile device. Whether commuting or relaxing at home, access top-notch entertainment with just a few taps." },
-        { "type": "image", "src": "app2" }
+        { "type": "paragraph", "text": "The app is lightweight, secure, and optimized for both Android and iOS devices. It delivers the full desktop experience in a compact and portable format, ensuring you never miss a moment of action." },
+        { "type": "image", "src": "/img/section_app.png" }
       ]
     },
     {
       "blockType": "features",
       "elements": [
-        { "type": "h2", "text": "App Features" },
-        { "type": "paragraph", "text": "High-quality graphics, user-friendly interface, extensive game selection and secure payment options." },
+        { "type": "title", "text": "App Features" },
+        { "type": "paragraph", "text": "Our mobile application is packed with features designed to enhance your gaming experience on the go." },
         {
           "type": "list",
           "items": [
-            { "title": "User-Friendly Interface", "description": "Navigate easily with intuitive design." },
-            { "title": "Secure Transactions", "description": "Your safety is our priority with encrypted payments." },
-            { "title": "Wide Game Selection", "description": "Choose from a variety of exciting games." },
-            { "title": "Regular Updates", "description": "Enjoy new features and games added frequently." }
+            { "title": "User-Friendly Interface", "description": "Navigate easily with an intuitive design optimized for touch screens and mobile displays." },
+            { "title": "Secure Transactions", "description": "Your safety is our priority with industry-standard encrypted payment processing." },
+            { "title": "Wide Game Selection", "description": "Access the complete game library including slots, table games, live casino, and sports betting." },
+            { "title": "Push Notifications", "description": "Stay updated with personalized alerts for promotions, game results, and account activity." }
           ]
         },
-        { "type": "image", "src": "app3" },
         { "type": "button" }
       ]
     },
     {
       "blockType": "download",
       "elements": [
-        { "type": "h2", "text": "How to Download the App" },
-        { "type": "paragraph", "text": "Downloading is simple and straightforward. Compatible with both Android and iOS devices." },
+        { "type": "title", "text": "How to Download the App" },
+        { "type": "paragraph", "text": "Downloading and installing the app is simple and straightforward. Follow these easy steps to get started in minutes." },
         {
           "type": "list",
           "items": [
-            { "title": "Visit Our Website", "description": "Go to the homepage to find the download link." },
-            { "title": "Select Your Device", "description": "Choose the correct version for Android or iOS." },
-            { "title": "Download the App", "description": "Click the download button to start the process." },
-            { "title": "Install the App", "description": "Follow the prompts to install on your device." },
-            { "title": "Create an Account", "description": "Sign up or log in to start playing." },
-            { "title": "Start Gaming", "description": "Explore the app and enjoy your favorite games." }
+            { "title": "Visit Our Website", "description": "Go to the official website using your mobile browser to find the download link." },
+            { "title": "Download the App", "description": "Tap the download button to start downloading the APK file to your device." },
+            { "title": "Allow Installation", "description": "Enable installation from unknown sources in your device settings if prompted." },
+            { "title": "Install the App", "description": "Open the downloaded file and follow the prompts to complete the installation." },
+            { "title": "Create an Account", "description": "Sign up for a new account or log in with your existing credentials." },
+            { "title": "Start Gaming", "description": "Explore the app, claim your welcome bonus, and enjoy your favorite games." }
           ]
         },
-        { "type": "image", "src": "app4" }
+        { "type": "button" }
+      ]
+    },
+    {
+      "blockType": "performance",
+      "elements": [
+        { "type": "title", "text": "Optimized Performance" },
+        { "type": "paragraph", "text": "The app is engineered for speed and reliability. Quick loading times, smooth animations, and minimal battery consumption ensure a premium experience on any device." },
+        { "type": "paragraph", "text": "Regular updates bring new features, performance improvements, and the latest games directly to your phone. Enable automatic updates to always have the best version installed." }
+      ]
+    },
+    {
+      "blockType": "compatibility",
+      "elements": [
+        { "type": "title", "text": "Device Compatibility" },
+        { "type": "paragraph", "text": "Our app is compatible with a wide range of Android devices running version 5.0 and above. The lightweight design ensures it runs smoothly even on older hardware with limited resources." },
+        { "type": "paragraph", "text": "For iOS users, the mobile web version provides an equally polished experience. Simply visit our website through Safari and add it to your home screen for app-like convenience." }
       ]
     }
   ]

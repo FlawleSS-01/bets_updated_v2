@@ -2,44 +2,59 @@
   "title": "Login - Access Your Account",
   "description": "Safely log into your account and enjoy seamless gaming experiences.",
   "h1": "Login | Secure Access to Your Account",
-  "h1Description": "Welcome to the login portal, where secure access to your gaming account is our priority. Enjoy a seamless and protected login experience.",
-  "h1Image": "login1",
-  "stats": [],
+  "h1Description": "Welcome to the login portal, where secure access to your gaming account is our priority. Enjoy a seamless and protected login experience with advanced encryption technology.",
+  "h1Image": "hero_login.png",
   "blocks": [
     {
       "blockType": "security",
       "elements": [
-        { "type": "h2", "text": "Prioritizing Your Security" },
-        { "type": "paragraph", "text": "Advanced encryption technologies protect your personal information. Log in confidently from any location without worrying about unauthorized access." },
-        { "type": "image", "src": "login2" }
+        { "type": "title", "text": "Prioritizing Your Security" },
+        { "type": "paragraph", "text": "Advanced encryption technologies protect your personal information at every step. Log in confidently from any location without worrying about unauthorized access or data breaches." },
+        { "type": "paragraph", "text": "We implement multi-layered security measures including SSL encryption, two-factor authentication, and real-time fraud monitoring to ensure your account remains safe at all times." }
       ]
     },
     {
       "blockType": "features",
       "elements": [
-        { "type": "h2", "text": "Exciting Features Awaiting You" },
-        { "type": "paragraph", "text": "Once logged in, explore personalized game recommendations, exclusive promotions, and seamless transitions between games." },
-        { "type": "image", "src": "login3" },
+        { "type": "title", "text": "Exciting Features Awaiting You" },
+        { "type": "paragraph", "text": "Once logged in, explore personalized game recommendations, exclusive promotions tailored to your preferences, and seamless transitions between games and betting markets." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Personalized Dashboard", "description": "View your balance, recent activity, and recommended games at a glance." },
+            { "title": "Quick Deposits", "description": "Fund your account instantly using your preferred payment method." },
+            { "title": "Betting History", "description": "Track all your past wagers and gaming sessions in one convenient location." },
+            { "title": "Exclusive Offers", "description": "Access member-only promotions and bonus opportunities available after login." }
+          ]
+        },
         { "type": "button" }
       ]
     },
     {
       "blockType": "forgot",
       "elements": [
-        { "type": "h2", "text": "Forgot Your Password? We've Got You Covered" },
-        { "type": "paragraph", "text": "Follow these steps to regain access to your account." },
-        { "type": "image", "src": "login4" },
+        { "type": "title", "text": "Forgot Your Password? We've Got You Covered" },
+        { "type": "paragraph", "text": "Losing access to your account can be frustrating, but recovering it is simple and secure. Follow these straightforward steps to regain access quickly." },
         {
           "type": "list",
           "items": [
-            { "title": "Visit the Login Page", "description": "Navigate to the login page and select 'Forgot Password.'" },
-            { "title": "Enter Your Email", "description": "Provide the email associated with your account to receive a reset link." },
-            { "title": "Check Your Inbox", "description": "Look for an email containing your password reset instructions." },
+            { "title": "Visit the Login Page", "description": "Navigate to the login page and select the 'Forgot Password' option." },
+            { "title": "Enter Your Email", "description": "Provide the email associated with your account to receive a secure reset link." },
+            { "title": "Check Your Inbox", "description": "Look for an email containing your password reset instructions within minutes." },
             { "title": "Click the Reset Link", "description": "Open the email and click on the provided link to start the reset process." },
-            { "title": "Create a New Password", "description": "Choose a strong, unique password to secure your account." },
+            { "title": "Create a New Password", "description": "Choose a strong, unique password combining letters, numbers, and symbols." },
             { "title": "Log In with Your New Password", "description": "Return to the login page and access your account using your updated credentials." }
           ]
         }
+      ]
+    },
+    {
+      "blockType": "account_benefits",
+      "elements": [
+        { "type": "title", "text": "Benefits of Having an Account" },
+        { "type": "paragraph", "text": "Your account is your gateway to a world of premium gaming entertainment. With a registered account, you can save your preferences, track your progress, and access exclusive features unavailable to guests." },
+        { "type": "paragraph", "text": "Members enjoy faster withdrawals, higher deposit limits, and access to our VIP loyalty program. The more you play, the more rewards you unlock — from cashback offers to personal account managers." },
+        { "type": "button" }
       ]
     }
   ]

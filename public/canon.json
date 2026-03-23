@@ -1,36 +1,22 @@
 {
   "home": {
-    "canonical": "lng",
-    "alternate": [
-      { "hrefLang": "en", "urlLang": "en" }
-    ]
+    "canonical": "self",
+    "alternate": []
   },
   "casino": {
-    "canonical": "lng",
-    "alternate": [
-      { "hrefLang": "en", "urlLang": "en" },
-      { "hrefLang": "x-default", "urlLang": "en" }
-    ]
+    "canonical": "self",
+    "alternate": []
   },
   "betting": {
-    "canonical": "lng",
-    "alternate": [
-      { "hrefLang": "en", "urlLang": "en" },
-      { "hrefLang": "x-default", "urlLang": "en" }
-    ]
+    "canonical": "self",
+    "alternate": []
   },
   "app": {
-    "canonical": "lng",
-    "alternate": [
-      { "hrefLang": "en", "urlLang": "en" },
-      { "hrefLang": "x-default", "urlLang": "en" }
-    ]
+    "canonical": "self",
+    "alternate": []
   },
   "login": {
-    "canonical": "lng",
-    "alternate": [
-      { "hrefLang": "en", "urlLang": "en" },
-      { "hrefLang": "x-default", "urlLang": "en" }
-    ]
+    "canonical": "self",
+    "alternate": []
   }
 }

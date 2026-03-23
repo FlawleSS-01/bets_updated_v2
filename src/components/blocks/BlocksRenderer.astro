@@ -20,26 +20,25 @@ import GameCategoryGrid from "./GameCategoryGrid.astro";
 
 interface Props {
   blocks: any[];
-  getImageSet: (key: string) => Record<string, string> | undefined;
   getImageMeta: (key: string) => { alt: string; title: string };
   seed?: string;
   pageKey?: string;
 }
 
-const { blocks = [], getImageSet, getImageMeta, seed = "seed", pageKey = "page" } = Astro.props;
+const { blocks = [], getImageMeta, seed = "seed", pageKey = "page" } = Astro.props;
 
 function supportsVariant(variant: string, p: ParsedBlock): boolean {
   if (variant === "default") return true;
   switch (variant) {
-    case "mediaSplit": return !!p.imageSet;
+    case "mediaSplit": return !!p.imageSrc;
     case "featuresCards": return Array.isArray(p.items) && p.items.length >= 1;
-    case "featuresCardsWithImage": return !!p.imageSet && Array.isArray(p.items) && p.items.length >= 1;
+    case "featuresCardsWithImage": return !!p.imageSrc && Array.isArray(p.items) && p.items.length >= 1;
     case "categoryTiles": return Array.isArray(p.items) && p.items.length >= 1;
     case "promoCardsGrid": return (Array.isArray(p.items) && p.items.length >= 2) || (Array.isArray(p.paragraphTexts) && p.paragraphTexts.length >= 1);
-    case "forgotTipsGrid": return !!p.imageSet && Array.isArray(p.items) && p.items.length >= 6;
+    case "forgotTipsGrid": return !!p.imageSrc && Array.isArray(p.items) && p.items.length >= 6;
     case "offerCards3": return Array.isArray(p.items) && p.items.length >= 3;
     case "logoMarquee": return Array.isArray(p.items) && p.items.length >= 3;
-    case "startSpotlight": return !!p.imageSet && (!!p.title || !!p.description);
+    case "startSpotlight": return !!p.imageSrc && (!!p.title || !!p.description);
     case "glossaryAccordion": return Array.isArray(p.items) && p.items.length >= 2;
     case "bentoHighlights": return Array.isArray(p.items) && p.items.length >= 3;
     case "stepsTimeline": return Array.isArray(p.items) && p.items.length >= 2;
@@ -74,7 +73,7 @@ const processedBlocks: ProcessedItem[] = blocks
   .map((block: any, index: number) => {
     if (!block || !Array.isArray(block.elements)) return null;
     const blockType = block.blockType || `block_${index}`;
-    const p = parseBlock(block, getImageSet, getImageMeta);
+    const p = parseBlock(block, getImageMeta);
 
     const baseRules = PAGE_RULES[pageKey] || {};
     const rule = baseRules[blockType];
@@ -83,7 +82,7 @@ const processedBlocks: ProcessedItem[] = blocks
       ? blockType === "powered" ? ["logoMarquee", "default"]
         : blockType === "bonuses" ? ["promoCardsGrid", "mediaSplit", "default"]
         : blockType === "popular_games" ? ["offerCards3", "default"]
-        : p.imageSet ? ["mediaSplit", "default"]
+        : p.imageSrc ? ["mediaSplit", "default"]
         : Array.isArray(p.items) && p.items.length >= 4 ? ["featuresCards", "default"]
         : ["default"]
       : null;
@@ -94,29 +93,29 @@ const processedBlocks: ProcessedItem[] = blocks
 
     return { blockType, p, variant, index } as ProcessedItem;
   })
-  .filter((x): x is ProcessedItem => x !== null);
+  .filter((x: ProcessedItem | null): x is ProcessedItem => x !== null) as ProcessedItem[];
 ---
 
 {processedBlocks.map((item) => {
   const { p, variant, index } = item;
 
   if (variant === "mediaSplit") {
-    return <MediaSplit title={p.title} paragraphs={p.paragraphTexts} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} reverse={index % 2 === 1} showButton={p.hasButton} />;
+    return <MediaSplit title={p.title} paragraphs={p.paragraphTexts} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} reverse={index % 2 === 1} showButton={p.hasButton} />;
   }
   if (variant === "featuresCards") {
     return <FeaturesCards title={p.title} description={p.description} items={p.items} showButton={p.hasButton} />;
   }
   if (variant === "featuresCardsWithImage") {
-    return <FeaturesCardsWithImage title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <FeaturesCardsWithImage title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "categoryTiles") {
-    return <CategoryTiles title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <CategoryTiles title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "promoCardsGrid") {
-    return <PromoCardsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <PromoCardsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "forgotTipsGrid") {
-    return <ForgotTipsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} />;
+    return <ForgotTipsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} />;
   }
   if (variant === "offerCards3") {
     return <OfferCards3 title={p.title} description={p.description} items={p.items} showButton={p.hasButton} />;
@@ -125,20 +124,20 @@ const processedBlocks: ProcessedItem[] = blocks
     return <LogoMarquee title={p.title} description={p.description} items={p.items} />;
   }
   if (variant === "startSpotlight") {
-    return <StartSpotlight title={p.title} description={p.description} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <StartSpotlight title={p.title} description={p.description} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "glossaryAccordion") {
-    return <GlossaryAccordion title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <GlossaryAccordion title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "bentoHighlights") {
-    return <BentoHighlights title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <BentoHighlights title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
   if (variant === "stepsTimeline") {
-    return <StepsTimeline title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} reverse={index % 2 === 1} />;
+    return <StepsTimeline title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} reverse={index % 2 === 1} />;
   }
   if (variant === "gameCategoryGrid") {
-    return <GameCategoryGrid title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+    return <GameCategoryGrid title={p.title} description={p.description} items={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
   }
 
-  return <Section title={p.title} paragraphs={p.paragraphTexts} listItems={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  return <Section title={p.title} paragraphs={p.paragraphTexts} listItems={p.items} imageSrc={p.imageSrc} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
 })}

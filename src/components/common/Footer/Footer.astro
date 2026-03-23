@@ -1,28 +1,16 @@
 ---
 import Logo from "@/components/ui/Logo/Logo.astro";
 import SocialLinks from "@/components/ui/SocialLinks/SocialLinks.astro";
+import { deriveFormats } from "@/lib/picture";
 
 interface Props {
-  lang: string;
   texts: any;
 }
 
-const { lang, texts } = Astro.props;
-const refUrl = "/go";
+const { texts } = Astro.props;
+const refUrl = import.meta.env.PUBLIC_REF || "#";
 
-const methods = [
-  { s: "met1_80", m: "met1_160", alt: "methods" },
-  { s: "met2_80", m: "met2_160", alt: "methods" },
-  { s: "met3_80", m: "met3_160", alt: "methods" },
-  { s: "met4_80", m: "met4_160", alt: "methods" },
-  { s: "met5_80", m: "met5_160", alt: "methods" },
-  { s: "met6_80", m: "met6_160", alt: "methods" },
-  { s: "met7_80", m: "met7_160", alt: "methods" },
-  { s: "met8_80", m: "met8_160", alt: "methods" },
-  { s: "met9_80", m: "met9_160", alt: "methods" },
-  { s: "met10_80", m: "met10_160", alt: "methods" },
-  { s: "met11_80", m: "met11_160", alt: "methods" },
-];
+const methods = Array.from({ length: 11 }, (_, i) => `/img/met${i + 1}.png`);
 ---
 
 <footer class="footer-1">
@@ -32,27 +20,31 @@ const methods = [
         <div class="methods_container">
           <h2 class="methods_title">{texts.footer.paymentMethodsTitle}</h2>
           <div class="methods_wrap">
-            {methods.map((m) => (
-              <a
-                href={refUrl}
-                class="methods_link"
-                rel="nofollow"
-                target="_blank"
-              >
-                <img
-                  src={m.s}
-                  srcset={`${m.s} 80w, ${m.m} 160w`}
-                  sizes="(max-width: 768px) 80px, 80px"
-                  alt={m.alt}
-                  class="methods_img"
-                  loading="lazy"
-                  decoding="async"
-                  fetchpriority="low"
-                  width="80"
-                  height="45"
-                />
-              </a>
-            ))}
+            {methods.map((src) => {
+              const fmt = deriveFormats(src);
+              return (
+                <a
+                  href={refUrl}
+                  class="methods_link"
+                  rel="nofollow"
+                  target="_blank"
+                >
+                  <picture>
+                    <source type="image/avif" srcset={fmt.avif} />
+                    <source type="image/webp" srcset={fmt.webp} />
+                    <img
+                      src={fmt.original}
+                      alt="Payment method"
+                      class="methods_img"
+                      loading="lazy"
+                      decoding="async"
+                      width="80"
+                      height="45"
+                    />
+                  </picture>
+                </a>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -62,27 +54,27 @@ const methods = [
           <div class="footer-1__menu-heading">{texts.footer.navigation}</div>
           <ul class="footer-1__menu">
             <li class="footer-1__menu-item">
-              <a href={`/${lang}`} class="footer-1__menu-link">
+              <a href="/" class="footer-1__menu-link">
                 {texts.footer.links.home}
               </a>
             </li>
             <li class="footer-1__menu-item">
-              <a href={`/${lang}/casino`} class="footer-1__menu-link">
+              <a href="/casino" class="footer-1__menu-link">
                 {texts.footer.links.casino}
               </a>
             </li>
             <li class="footer-1__menu-item">
-              <a href={`/${lang}/login`} class="footer-1__menu-link">
+              <a href="/login" class="footer-1__menu-link">
                 {texts.footer.links.login}
               </a>
             </li>
             <li class="footer-1__menu-item">
-              <a href={`/${lang}/app`} class="footer-1__menu-link">
+              <a href="/app" class="footer-1__menu-link">
                 {texts.footer.links.app}
               </a>
             </li>
             <li class="footer-1__menu-item">
-              <a href={`/${lang}/betting`} class="footer-1__menu-link">
+              <a href="/betting" class="footer-1__menu-link">
                 {texts.footer.links.betting}
               </a>
             </li>
@@ -94,7 +86,7 @@ const methods = [
         </div>
 
         <div class="footer-1__wrap">
-          <Logo lang={lang} className="footer-1__logo" />
+          <Logo className="footer-1__logo" />
         </div>
       </div>
     </div>
@@ -109,7 +101,7 @@ const methods = [
     </div>
   </div>
 
-  <a href="/go" rel="nofollow" class="fav pulse" target="_blank">
+  <a href={refUrl} rel="nofollow" class="fav pulse" target="_blank">
     <img src="/img/tel.svg" alt="Contact" width="30" height="30" />
   </a>
 </footer>

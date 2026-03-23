@@ -1,16 +1,72 @@
 ---
+import type { MetatagsI } from "@/components/common/MetaTags";
+import Banner from "@/components/common/Banner/Banner.astro";
+import HeroSplit from "@/components/blocks/HeroSplit.astro";
+import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
+import FaqSection from "@/components/blocks/FaqSection.astro";
 import { defaultLng } from "@/config/language";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getText } from "@/locales/getText";
+import { buildSeoSchema } from "@/lib/seoSchema";
 
 export const prerender = true;
+
+const lang = defaultLng;
+const langCode = lang.split("-")[0] || "en";
+
+const commonTexts = await getText(langCode, "common");
+const metaCanons = await import("P/canon.json");
+const pageData = await getText(langCode, "home");
+
+const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
+const brandName = import.meta.env.PUBLIC_BRAND || "";
+
+const imageDescription = commonTexts.imageDescription?.home || {};
+const getImageMeta = (key: string) => {
+  const filename = key.split("/").pop() || key;
+  return imageDescription[filename] || imageDescription[key] || { alt: "", title: "" };
+};
+
+const h1ImageSrc = pageData.h1Image ? `/img/${pageData.h1Image}` : undefined;
+
+const schema = buildSeoSchema({
+  page: "home",
+  baseUrl,
+  brandName,
+  lang,
+  title: pageData.title,
+  description: pageData.description,
+  faqItems: commonTexts.faq?.items,
+});
+
+const metaTags: MetatagsI = {
+  title: pageData.title,
+  descr: pageData.description,
+  metaCanons: (metaCanons as any).home,
+};
+
+const siteSeed = [brandName, baseUrl, lang].join("|");
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content={`0; url=/${defaultLng}`} />
-    <link rel="canonical" href={`${import.meta.env.PUBLIC_DOMAIN}/${defaultLng}`} />
-    <title>Redirecting...</title>
-  </head>
-  <body></body>
-</html>
+<BaseLayout commonTexts={commonTexts} schema={schema} metatags={metaTags}>
+  <Banner texts={commonTexts.banner} />
+
+  {(pageData.h1 || pageData.h1Description) && (
+    <HeroSplit
+      title={pageData.h1}
+      description={pageData.h1Description}
+      imageSrc={h1ImageSrc}
+      imageAlt={getImageMeta(pageData.h1Image)?.alt}
+      imageTitle={getImageMeta(pageData.h1Image)?.title}
+    />
+  )}
+
+  <BlocksRenderer
+    blocks={pageData.blocks || []}
+    getImageMeta={getImageMeta}
+    seed={siteSeed}
+    pageKey="home"
+  />
+
+  <FaqSection title={commonTexts.faq.title} items={commonTexts.faq.items} />
+</BaseLayout>

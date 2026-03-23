@@ -1,23 +1,40 @@
 ---
+const refUrl = import.meta.env.PUBLIC_REF || "#";
 ---
 
 <div class="footer-social">
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="Email">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="Email">
     <img src="/img/social-email.svg" alt="" width="22" height="22" />
   </a>
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="Twitter">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="Twitter">
     <img src="/img/social-x.svg" alt="" width="22" height="22" />
   </a>
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="Facebook">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="Facebook">
     <img src="/img/social-facebook.svg" alt="" width="22" height="22" />
   </a>
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="Instagram">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="Instagram">
     <img src="/img/social-instagram.svg" alt="" width="22" height="22" />
   </a>
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="Telegram">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="Telegram">
     <img src="/img/social-telegram.svg" alt="" width="22" height="22" />
   </a>
-  <a href="/go" target="_blank" rel="noopener noreferrer nofollow" aria-label="WhatsApp">
+  <a href={refUrl} target="_blank" rel="noopener noreferrer nofollow" aria-label="WhatsApp">
     <img src="/img/social-whatsapp.svg" alt="" width="22" height="22" />
   </a>
 </div>
+
+<style>
+  .footer-social a {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .footer-social img {
+    filter: brightness(0) invert(1);
+    transition: opacity 0.2s;
+  }
+  .footer-social a:hover img {
+    opacity: 0.7;
+  }
+</style>

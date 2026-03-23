@@ -4,18 +4,15 @@ import Banner from "@/components/common/Banner/Banner.astro";
 import HeroSplit from "@/components/blocks/HeroSplit.astro";
 import StatsStrip from "@/components/blocks/StatsStrip.astro";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
-import { defaultLng, supportedLanguages } from "@/config/language";
+import { defaultLng } from "@/config/language";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getText } from "@/locales/getText";
 import { buildSeoSchema } from "@/lib/seoSchema";
-import type { GetStaticPaths } from "astro";
 
-export const getStaticPaths = (() => {
-  return supportedLanguages.map((lang) => ({ params: { lang } }));
-}) satisfies GetStaticPaths;
+export const prerender = true;
 
-const { lang } = Astro.params;
-const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
+const lang = defaultLng;
+const langCode = lang.split("-")[0] || "en";
 
 const commonTexts = await getText(langCode, "common");
 const metaCanons = await import("P/canon.json");
@@ -24,19 +21,13 @@ const pageData = await getText(langCode, "casino");
 const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
 const brandName = import.meta.env.PUBLIC_BRAND || "";
 
-const imageMap: Record<string, Record<number, string>> = {
-  casino1: { 360: "casino1_360", 460: "casino1_460", 600: "casino1_600" },
-  casino2: { 360: "casino2_360", 460: "casino2_460", 600: "casino2_600" },
-  casino3: { 360: "casino3_360", 460: "casino3_460", 600: "casino3_600" },
-  casino4: { 360: "casino4_360", 460: "casino4_460", 600: "casino4_600" },
+const imageDescription = commonTexts.imageDescription?.casino || {};
+const getImageMeta = (key: string) => {
+  const filename = key.split("/").pop() || key;
+  return imageDescription[filename] || imageDescription[key] || { alt: "", title: "" };
 };
 
-const imageDescription = commonTexts.imageDescription?.casino || {};
-const getImageMeta = (key: string) => imageDescription[key] || { alt: "", title: "" };
-const getImageSet = (key: string): Record<string, string> | undefined =>
-  imageMap[key] as Record<string, string> | undefined;
-
-const h1ImageSet = getImageSet(pageData.h1Image);
+const h1ImageSrc = pageData.h1Image ? `/img/${pageData.h1Image}` : undefined;
 
 const schema = buildSeoSchema({
   page: "casino",
@@ -63,7 +54,7 @@ const siteSeed = [brandName, baseUrl, lang].join("|");
     <HeroSplit
       title={pageData.h1}
       description={pageData.h1Description}
-      imageSet={h1ImageSet}
+      imageSrc={h1ImageSrc}
       imageAlt={getImageMeta(pageData.h1Image)?.alt}
       imageTitle={getImageMeta(pageData.h1Image)?.title}
     />
@@ -73,7 +64,6 @@ const siteSeed = [brandName, baseUrl, lang].join("|");
 
   <BlocksRenderer
     blocks={pageData.blocks || []}
-    getImageSet={getImageSet}
     getImageMeta={getImageMeta}
     seed={siteSeed}
     pageKey="casino"

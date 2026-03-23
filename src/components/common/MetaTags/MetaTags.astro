@@ -1,59 +1,39 @@
 ---
-import { defaultLng, languages, supportedLanguages } from "@/config/language";
+import { defaultLng } from "@/config/language";
 import type { MetatagsI, PathT } from "./types";
-import { getPathWithoutLanguage } from "@/lib/getPathWithoutLang";
 
-const { lang } = Astro.params;
 const { title, descr, keywords, image, imageAlt, metaCanons } =
   Astro.props as MetatagsI;
 
-const domain = import.meta.env.PUBLIC_DOMAIN;
+const domain = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
 const fullurl = Astro.url.href;
-const currentPath = getPathWithoutLanguage(
-  Astro.url.pathname,
-  supportedLanguages,
-);
-const normalizedPath = currentPath === "/" ? "" : currentPath;
+const lang = defaultLng;
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const normalizedPath = pathname === "/" ? "" : pathname.replace(/^\//, "");
 
 let paths: PathT[] = [];
 
 if (metaCanons) {
-  const canonicalLang =
-    metaCanons.canonical === "lng" ? lang : metaCanons.canonical;
-
   paths.push({
     type: "canonical",
-    path: `${domain}/${canonicalLang}/${normalizedPath}`,
+    path: `${domain}/${normalizedPath}`,
   });
 
-  metaCanons.alternate.forEach((alt) => {
+  metaCanons.alternate?.forEach((alt: any) => {
     paths.push({
       type: "alternate",
       lang: alt.hrefLang,
-      path: `${domain}/${alt.urlLang}/${normalizedPath}`,
+      path: `${domain}/${normalizedPath}`,
     });
   });
 } else {
   paths = [
     {
       type: "canonical",
-      path: `${domain}/${lang}/${normalizedPath}`,
+      path: `${domain}/${normalizedPath}`,
     },
   ];
-
-  languages.forEach((l) => {
-    paths.push({
-      type: "alternate",
-      lang: l.code,
-      path: `${domain}/${l.code}/${normalizedPath}`,
-    });
-  });
-
-  paths.push({
-    type: "alternate",
-    path: `${domain}/${defaultLng}/${normalizedPath}`,
-    lang: "x-default",
-  });
 }
 ---
 

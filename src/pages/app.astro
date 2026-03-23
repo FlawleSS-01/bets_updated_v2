@@ -3,53 +3,46 @@ import type { MetatagsI } from "@/components/common/MetaTags";
 import Banner from "@/components/common/Banner/Banner.astro";
 import Section from "@/components/blocks/Section.astro";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
-import { defaultLng, supportedLanguages } from "@/config/language";
+import { defaultLng } from "@/config/language";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getText } from "@/locales/getText";
 import { buildSeoSchema } from "@/lib/seoSchema";
-import type { GetStaticPaths } from "astro";
 
-export const getStaticPaths = (() => {
-  return supportedLanguages.map((lang) => ({ params: { lang } }));
-}) satisfies GetStaticPaths;
+export const prerender = true;
 
-const { lang } = Astro.params;
-const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
+const lang = defaultLng;
+const langCode = lang.split("-")[0] || "en";
 
 const commonTexts = await getText(langCode, "common");
 const metaCanons = await import("P/canon.json");
-const pageData = await getText(langCode, "betting");
+const pageData = await getText(langCode, "app");
 
 const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
 const brandName = import.meta.env.PUBLIC_BRAND || "";
+const apkPath = import.meta.env.PUBLIC_APP || "/app.apk";
 
-const imageMap: Record<string, Record<number, string>> = {
-  bets1: { 360: "bet1_360", 460: "bet1_460", 600: "bet1_600" },
-  bets2: { 360: "bet2_360", 460: "bet2_460", 600: "bet2_600" },
-  bets3: { 360: "bet3_360", 460: "bet3_460", 600: "bet3_600" },
-  bets4: { 360: "bet4_360", 460: "bet4_460", 600: "bet4_600" },
+const imageDescription = commonTexts.imageDescription?.app || {};
+const getImageMeta = (key: string) => {
+  const filename = key.split("/").pop() || key;
+  return imageDescription[filename] || imageDescription[key] || { alt: "", title: "" };
 };
 
-const imageDescription = commonTexts.imageDescription?.betting || {};
-const getImageMeta = (key: string) => imageDescription[key] || { alt: "", title: "" };
-const getImageSet = (key: string): Record<string, string> | undefined =>
-  imageMap[key] as Record<string, string> | undefined;
-
-const h1ImageSet = getImageSet(pageData.h1Image);
+const h1ImageSrc = pageData.h1Image ? `/img/${pageData.h1Image}` : undefined;
 
 const schema = buildSeoSchema({
-  page: "betting",
+  page: "app",
   baseUrl,
   brandName,
   lang,
   title: pageData.title,
   description: pageData.description,
+  apkPath,
 });
 
 const metaTags: MetatagsI = {
   title: pageData.title,
   descr: pageData.description,
-  metaCanons: (metaCanons as any).betting,
+  metaCanons: (metaCanons as any).app,
 };
 
 const siteSeed = [brandName, baseUrl, lang].join("|");
@@ -63,19 +56,17 @@ const siteSeed = [brandName, baseUrl, lang].join("|");
       title={pageData.h1}
       text={pageData.h1Description}
       isMainTitle={true}
-      imageSet={h1ImageSet}
+      imageSrc={h1ImageSrc}
       imageAlt={getImageMeta(pageData.h1Image)?.alt}
       imageTitle={getImageMeta(pageData.h1Image)?.title}
-      imagePriority={true}
       showButton={true}
     />
   )}
 
   <BlocksRenderer
     blocks={pageData.blocks || []}
-    getImageSet={getImageSet}
     getImageMeta={getImageMeta}
     seed={siteSeed}
-    pageKey="betting"
+    pageKey="app"
   />
 </BaseLayout>

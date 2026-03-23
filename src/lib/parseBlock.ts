@@ -10,30 +10,23 @@ interface Block {
   elements: BlockElement[];
 }
 
-interface ImageMeta {
-  alt: string;
-  title: string;
-}
-
 export interface ParsedBlock {
   title: string;
   paragraphTexts: string[];
   description: string;
   items: { title: string; description: string }[];
-  imageKey: string | null;
-  imageSet: Record<string, string> | undefined;
-  meta: ImageMeta;
+  imageSrc: string | undefined;
+  meta: { alt: string; title: string };
   hasButton: boolean;
 }
 
 export function parseBlock(
   block: Block,
-  getImageSet?: (key: string) => Record<string, string> | undefined,
-  getImageMeta?: (key: string) => ImageMeta,
+  getImageMeta?: (key: string) => { alt: string; title: string },
 ): ParsedBlock {
   const elements = block?.elements || [];
 
-  const titleEl = elements.find((el) => el.type === "h2");
+  const titleEl = elements.find((el) => el.type === "title");
   const paragraphs = elements.filter((el) => el.type === "paragraph");
 
   const listEl = elements.find(
@@ -52,19 +45,18 @@ export function parseBlock(
   if (listEl?.items) items = listEl.items;
   if (glossaryEl?.items) items = glossaryEl.items;
 
-  const imageKey = imageEl?.src || null;
-  const imageSet = imageKey ? getImageSet?.(imageKey) : undefined;
-  const meta = imageKey && getImageMeta
-    ? getImageMeta(imageKey)
-    : { alt: "", title: "" };
+  const imageSrc = imageEl?.src || undefined;
+  const meta =
+    imageSrc && getImageMeta
+      ? getImageMeta(imageSrc)
+      : { alt: "", title: "" };
 
   return {
     title,
     paragraphTexts,
     description,
     items,
-    imageKey,
-    imageSet,
+    imageSrc,
     meta,
     hasButton,
   };

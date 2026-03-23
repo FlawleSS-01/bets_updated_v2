@@ -3,7 +3,7 @@
   "description": "Delve into the exciting world of casino gaming with top-quality games and features.",
   "h1": "Casino: Your Gaming Destination",
   "h1Description": "Welcome to the Casino, where gaming enthusiasts discover a thrilling world of entertainment. Our platform offers a wide array of games, ensuring endless fun and excitement.",
-  "h1Image": "casino1",
+  "h1Image": "hero_casino.png",
   "stats": [
     { "value": "1500+", "label": "Games Available" },
     { "value": "24/7", "label": "Customer Support" },
@@ -14,35 +14,54 @@
     {
       "blockType": "welcome",
       "elements": [
-        { "type": "h2", "text": "Welcome to the World of Casino Games" },
-        { "type": "paragraph", "text": "Enjoy a vibrant and exhilarating gaming platform. Our collection of games is meticulously curated to provide both variety and quality." },
-        { "type": "image", "src": "casino2" }
+        { "type": "title", "text": "Welcome to the World of Casino Games" },
+        { "type": "paragraph", "text": "Enjoy a vibrant and exhilarating gaming platform. Our collection of games is meticulously curated to provide both variety and quality. Each title is sourced from leading software developers to guarantee fairness and high entertainment value." },
+        { "type": "paragraph", "text": "Whether you are drawn to the spinning reels of slot machines or the strategic depth of card games, our casino floor offers something for every taste and experience level." },
+        { "type": "image", "src": "/img/section_casino.png" }
       ]
     },
     {
       "blockType": "features",
       "elements": [
-        { "type": "h2", "text": "Outstanding Casino Features" },
-        { "type": "paragraph", "text": "A user-friendly interface ensures seamless navigation, while state-of-the-art security measures keep your information safe." },
-        { "type": "image", "src": "casino3" },
+        { "type": "title", "text": "Outstanding Casino Features" },
+        { "type": "paragraph", "text": "A user-friendly interface ensures seamless navigation, while state-of-the-art security measures keep your information safe. Our platform is optimized for performance across all devices." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Wide Game Library", "description": "Over 1500 games including slots, table games, and live casino options." },
+            { "title": "Instant Play", "description": "No downloads required — play directly from your browser on any device." },
+            { "title": "Bonuses & Promotions", "description": "Regular offers including welcome bonuses, cashback, and free spins." },
+            { "title": "VIP Program", "description": "Loyal players enjoy exclusive rewards, higher limits, and personalized support." }
+          ]
+        },
         { "type": "button" }
       ]
     },
     {
       "blockType": "casino_games",
       "elements": [
-        { "type": "h2", "text": "Explore Our Diverse Range of Casino Games" },
-        { "type": "paragraph", "text": "From thrilling slots to immersive live dealer games, we have something for everyone." },
+        { "type": "title", "text": "Explore Our Diverse Range of Casino Games" },
+        { "type": "paragraph", "text": "From thrilling slots to immersive live dealer games, we have something for everyone. Our library is constantly expanding with the latest releases from top providers worldwide." },
         {
           "type": "list",
           "items": [
-            { "title": "Slots", "description": "Spin the reels of exciting slot games with various themes and features." },
-            { "title": "Live Dealer Games", "description": "Experience the thrill of real-time gaming with professional live dealers." },
-            { "title": "Table Games", "description": "Challenge yourself with classic table games like blackjack and roulette." },
-            { "title": "Jackpots", "description": "Aim for massive wins with progressive jackpot games." }
+            { "title": "Slots", "description": "Spin the reels of exciting slot games with various themes, bonus rounds, and progressive jackpots." },
+            { "title": "Live Dealer Games", "description": "Experience the thrill of real-time gaming with professional live dealers streaming from state-of-the-art studios." },
+            { "title": "Table Games", "description": "Challenge yourself with classic table games like blackjack, roulette, baccarat, and poker variants." },
+            { "title": "Jackpots", "description": "Aim for massive wins with progressive jackpot games where the prize pool grows with every spin." }
           ]
+        }
+      ]
+    },
+    {
+      "blockType": "bonuses",
+      "elements": [
+        { "type": "title", "text": "Take Advantage of Exciting Bonuses" },
+        {
+          "type": "paragraph",
+          "text": "We offer a range of bonuses designed to boost your gameplay. From welcome bonuses to weekly promotions, there's always something to enhance your experience. Our loyalty program rewards regular players, offering exclusive perks and benefits. Keep an eye on our promotions page to make the most of what we offer."
         },
-        { "type": "image", "src": "casino4" }
+        { "type": "button" }
       ]
     }
   ]

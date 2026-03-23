@@ -4,8 +4,10 @@ interface Props {
   loginLabel?: string;
 }
 
-const { downloadLabel = "DOWNLOAD APP", loginLabel = "LOGIN" } = Astro.props;
+const { downloadLabel = "DOWNLOAD", loginLabel = "LOGIN" } = Astro.props;
 const appPath = import.meta.env.PUBLIC_APP || "/app.apk";
+const refUrl = import.meta.env.PUBLIC_REF || "#";
+const brandName = import.meta.env.PUBLIC_BRAND || "";
 const isApk = appPath.endsWith(".apk");
 ---
 
@@ -14,16 +16,18 @@ const isApk = appPath.endsWith(".apk");
     href={appPath}
     class="button LzGMrweGNaCCJSd XWcVBPcnlRzZTfD"
     rel="nofollow"
-    {...(isApk ? { download: `${import.meta.env.PUBLIC_BRAND}.apk` } : { target: "_blank" })}
+    {...(isApk
+      ? { download: `${brandName}.apk` }
+      : { target: "_blank" })}
   >
-    {downloadLabel}
+    {downloadLabel} {brandName}
   </a>
   <a
-    href="/go"
+    href={refUrl}
     class="button LzGMrweGNaCCJSd XWcVBPcnlRzZTfD"
     rel="nofollow"
     target="_blank"
   >
-    {loginLabel}
+    {loginLabel} {brandName}
   </a>
 </div>

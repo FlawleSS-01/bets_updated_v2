@@ -3,18 +3,15 @@ import type { MetatagsI } from "@/components/common/MetaTags";
 import Banner from "@/components/common/Banner/Banner.astro";
 import Section from "@/components/blocks/Section.astro";
 import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
-import { defaultLng, supportedLanguages } from "@/config/language";
+import { defaultLng } from "@/config/language";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getText } from "@/locales/getText";
 import { buildSeoSchema } from "@/lib/seoSchema";
-import type { GetStaticPaths } from "astro";
 
-export const getStaticPaths = (() => {
-  return supportedLanguages.map((lang) => ({ params: { lang } }));
-}) satisfies GetStaticPaths;
+export const prerender = true;
 
-const { lang } = Astro.params;
-const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
+const lang = defaultLng;
+const langCode = lang.split("-")[0] || "en";
 
 const commonTexts = await getText(langCode, "common");
 const metaCanons = await import("P/canon.json");
@@ -23,19 +20,13 @@ const pageData = await getText(langCode, "login");
 const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
 const brandName = import.meta.env.PUBLIC_BRAND || "";
 
-const imageMap: Record<string, Record<number, string>> = {
-  login1: { 360: "login1_360", 460: "login1_460", 600: "login1_600" },
-  login2: { 360: "login2_360", 460: "login2_460", 600: "login2_600" },
-  login3: { 360: "login3_360", 460: "login3_460", 600: "login3_600" },
-  login4: { 360: "login4_360", 460: "login4_460", 600: "login4_600" },
+const imageDescription = commonTexts.imageDescription?.login || {};
+const getImageMeta = (key: string) => {
+  const filename = key.split("/").pop() || key;
+  return imageDescription[filename] || imageDescription[key] || { alt: "", title: "" };
 };
 
-const imageDescription = commonTexts.imageDescription?.login || {};
-const getImageMeta = (key: string) => imageDescription[key] || { alt: "", title: "" };
-const getImageSet = (key: string): Record<string, string> | undefined =>
-  imageMap[key] as Record<string, string> | undefined;
-
-const h1ImageSet = getImageSet(pageData.h1Image);
+const h1ImageSrc = pageData.h1Image ? `/img/${pageData.h1Image}` : undefined;
 
 const schema = buildSeoSchema({
   page: "login",
@@ -63,7 +54,7 @@ const siteSeed = [brandName, baseUrl, lang].join("|");
       title={pageData.h1}
       text={pageData.h1Description}
       isMainTitle={true}
-      imageSet={h1ImageSet}
+      imageSrc={h1ImageSrc}
       imageAlt={getImageMeta(pageData.h1Image)?.alt}
       imageTitle={getImageMeta(pageData.h1Image)?.title}
       imagePriority={true}
@@ -73,7 +64,6 @@ const siteSeed = [brandName, baseUrl, lang].join("|");
 
   <BlocksRenderer
     blocks={pageData.blocks || []}
-    getImageSet={getImageSet}
     getImageMeta={getImageMeta}
     seed={siteSeed}
     pageKey="login"
