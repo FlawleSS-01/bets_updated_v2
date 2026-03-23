@@ -1,0 +1,122 @@
+---
+import type { MetatagsI } from "@/components/common/MetaTags";
+import ContentSection from "@/components/sections/ContentSection/ContentSection.astro";
+import CtaSection from "@/components/sections/CtaSection/CtaSection.astro";
+import FaqSection from "@/components/sections/FaqSection.astro";
+import FeaturesSection from "@/components/sections/FeaturesSection/FeaturesSection.astro";
+import Hero from "@/components/sections/Hero/Hero.astro";
+import StepsSection from "@/components/sections/StepsSection.astro";
+import { defaultLng, supportedLanguages } from "@/config/language";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getText } from "@/locales/getText";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (() => {
+  return supportedLanguages.map((lang) => ({ params: { lang } }));
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params;
+const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
+
+const commonTexts = await getText(langCode, "common");
+const metaCanons = await import("P/canon.json");
+const page = await getText(langCode, "login");
+
+const breadcrumbs = [
+  { name: commonTexts.pages.home, url: `/${lang}` },
+  { name: commonTexts.pages.login, url: `/${lang}/login` },
+];
+
+const schema = {
+  breadcrumbList: {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: breadcrumbs.map((bc, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: bc.name,
+      item: `${import.meta.env.PUBLIC_DOMAIN}${bc.url}`,
+    })),
+  },
+  webPage: {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: page.meta.title,
+    description: page.meta.description,
+    url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}/login`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: import.meta.env.PUBLIC_BRAND,
+      url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}`,
+    },
+    inLanguage: lang,
+    datePublished: new Date().toISOString().split("T")[0],
+    dateModified: new Date().toISOString().split("T")[0],
+  },
+};
+
+const metaTags: MetatagsI = {
+  title: page.meta.title,
+  descr: page.meta.description,
+  keywords: page.meta.keywords,
+  metaCanons: (metaCanons as any).login,
+};
+
+let contentIndex = 0;
+---
+
+<BaseLayout schema={schema} commonTexts={commonTexts} metatags={metaTags}>
+  <Hero
+    lang={lang}
+    badge={page.hero.badge}
+    title={page.hero.title}
+    description={page.hero.description}
+    breadcrumb={breadcrumbs}
+    primaryButtonText={page.hero.primaryButtonText}
+    primaryButtonHref={page.hero.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : page.hero.primaryButtonHref}
+  />
+
+  {page.sections.map((section: any) => {
+    if (section.type === "content") {
+      contentIndex++;
+      return (
+        <ContentSection
+          lang={lang}
+          title={section.title}
+          description={section.description}
+          image={section.image}
+          imageAlt={section.imageAlt}
+          buttonText={section.buttonText}
+          buttonHref={section.buttonHref}
+          reverse={contentIndex % 2 === 0}
+        />
+      );
+    }
+    if (section.type === "features") {
+      return (
+        <FeaturesSection title={section.title} description={section.description} items={section.items} />
+      );
+    }
+    if (section.type === "faq") {
+      return <FaqSection title={section.title} items={section.items} />;
+    }
+    if (section.type === "steps") {
+      return <StepsSection title={section.title} description={section.description} items={section.items} />;
+    }
+    if (section.type === "cta") {
+      return (
+        <CtaSection
+          lang={lang}
+          title={section.title}
+          description={section.description}
+          primaryButtonText={section.primaryButtonText}
+          primaryButtonHref={section.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.primaryButtonHref}
+          secondaryButtonText={section.secondaryButtonText}
+          secondaryButtonHref={section.secondaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.secondaryButtonHref}
+          variant="card"
+        />
+      );
+    }
+    return null;
+  })}
+</BaseLayout>

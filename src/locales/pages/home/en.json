@@ -1,0 +1,59 @@
+{
+  "meta": {
+    "title": "Casino - Discover Gaming Excellence",
+    "description": "Uncover the ultimate gaming experience. Dive into a world of excitement and innovation.",
+    "keywords": "casino, online gaming, slots, betting, live dealer, welcome bonus"
+  },
+  "hero": {
+    "title": "Your Gateway to Gaming",
+    "description": "Experience the thrill of gaming where innovation meets excitement. Our platform offers a diverse range of games, ensuring endless entertainment.",
+    "primaryButtonText": "Play Now",
+    "primaryButtonHref": "/go",
+    "secondaryButtonText": "Download App",
+    "secondaryButtonHref": "/app.apk",
+    "primaryButtonIcon": ""
+  },
+  "sections": [
+    {
+      "type": "content",
+      "title": "Welcome to the Casino",
+      "description": "Embark on a thrilling journey through the world of online gaming. Our platform is crafted to provide an exceptional gaming experience. Whether you are a seasoned player or new to the scene, we offer a welcoming environment for all."
+    },
+    {
+      "type": "features",
+      "title": "Unmatched Features for Every Gamer",
+      "description": "We pride ourselves on offering a wide array of features that cater to every type of gamer.",
+      "items": [
+        { "title": "State-of-the-Art Tech", "description": "Smooth gameplay and seamless experience powered by cutting-edge technology.", "icon": "⚡" },
+        { "title": "24/7 Support", "description": "Our customer support team is always available to help you with any issues.", "icon": "🛡️" },
+        { "title": "Secure Environment", "description": "Play with confidence knowing your data is protected with advanced encryption.", "icon": "🔒" }
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Explore Our Popular Games",
+      "description": "Discover a selection of popular games that will keep you entertained for hours. Our extensive library includes a variety of slots, table games, and live dealer options."
+    },
+    {
+      "type": "faq",
+      "title": "Frequently Asked Questions",
+      "items": [
+        { "question": "What types of games are available?", "answer": "We offer a wide range of games including slots, table games, and live dealer options. Players can enjoy various genres tailored to their preferences." },
+        { "question": "Is the casino safe and secure?", "answer": "Yes, we prioritize player safety. We use advanced encryption technologies to protect your personal information and ensure secure transactions." },
+        { "question": "How do I deposit money into my account?", "answer": "Depositing funds is easy. Simply log in to your account, navigate to the cashier section, and choose your preferred payment method to make a deposit." },
+        { "question": "What bonuses are available for new players?", "answer": "New players can take advantage of generous welcome bonuses, including deposit matches and free spins. Check our promotions page for the latest offers." },
+        { "question": "Can I play on mobile devices?", "answer": "Absolutely! The platform is optimized for mobile play, and you can access games through the app or your mobile browser." },
+        { "question": "How do I contact customer support?", "answer": "You can reach our customer support team via live chat or email. We offer 24/7 assistance to ensure all your questions are answered promptly." }
+      ]
+    },
+    {
+      "type": "cta",
+      "title": "Ready to Start Playing?",
+      "description": "Join thousands of players who have already discovered the ultimate gaming experience.",
+      "primaryButtonText": "Join Now",
+      "primaryButtonHref": "/go",
+      "secondaryButtonText": "Download App",
+      "secondaryButtonHref": "/app.apk"
+    }
+  ]
+}

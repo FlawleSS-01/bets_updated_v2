@@ -1,0 +1,109 @@
+---
+import SectionHeader from "@/components/ui/SectionHeader/SectionHeader.astro";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  tag?: string;
+  tagIcon?: string;
+  title: string;
+  highlightedText?: string;
+  description?: string;
+  items: FaqItem[];
+}
+
+const { tag, tagIcon, title, highlightedText, description, items } = Astro.props;
+---
+
+<section class="faq-section">
+  <div class="container">
+    <SectionHeader tag={tag} tagIcon={tagIcon} title={title} description={description} />
+
+    <div class="faq-list">
+      {items.map((item) => (
+        <div class="faq-item">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            {item.question}
+            <span class="faq-chevron">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>{item.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    padding: 80px 24px;
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .faq-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+  }
+
+  .faq-item:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.04);
+    color: inherit;
+    font-size: 17px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .faq-chevron {
+    font-size: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .faq-chevron {
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 20px;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+    padding: 0 20px 18px;
+  }
+
+  .faq-answer p {
+    font-size: 15px;
+    line-height: 1.7;
+    opacity: 0.85;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Casino - Experience Gaming",
+    "description": "Delve into the exciting world of casino gaming with top-quality games and features.",
+    "keywords": "casino, online casino, slots, live dealer, table games, roulette, blackjack"
+  },
+  "hero": {
+    "badge": "🎰 Casino",
+    "title": "Casino: Your Gaming Destination",
+    "description": "Welcome to the Casino, where gaming enthusiasts discover a thrilling world of entertainment. Our platform offers a wide array of games, ensuring endless fun and excitement.",
+    "primaryButtonText": "Play Now",
+    "primaryButtonHref": "/go",
+    "stats": [
+      { "value": "1500+", "label": "Games Available" },
+      { "value": "24/7", "label": "Customer Support" },
+      { "value": "95%", "label": "Payout Rate" },
+      { "value": "10 min", "label": "Average Withdrawal Time" }
+    ]
+  },
+  "sections": [
+    {
+      "type": "content",
+      "title": "Welcome to the World of Casino Games",
+      "description": "Enjoy a vibrant and exhilarating gaming platform. Our collection of games is meticulously curated to provide both variety and quality."
+    },
+    {
+      "type": "features",
+      "title": "Outstanding Casino Features",
+      "description": "A user-friendly interface ensures seamless navigation, while state-of-the-art security measures keep your information safe.",
+      "items": [
+        { "title": "Slots", "description": "Spin the reels of exciting slot games with various themes and features.", "icon": "🎰" },
+        { "title": "Live Dealer Games", "description": "Experience the thrill of real-time gaming with professional live dealers.", "icon": "🃏" },
+        { "title": "Table Games", "description": "Challenge yourself with classic table games like blackjack and roulette.", "icon": "♠️" },
+        { "title": "Jackpots", "description": "Aim for massive wins with progressive jackpot games.", "icon": "💰" }
+      ]
+    },
+    {
+      "type": "content",
+      "title": "Explore Our Diverse Range of Casino Games",
+      "description": "From thrilling slots to immersive live dealer games, we have something for everyone.",
+      "buttonText": "Start Playing",
+      "buttonHref": "/go"
+    },
+    {
+      "type": "cta",
+      "title": "Start Your Casino Journey",
+      "description": "Join our casino and discover a world of endless entertainment.",
+      "primaryButtonText": "Join Now",
+      "primaryButtonHref": "/go"
+    }
+  ]
+}

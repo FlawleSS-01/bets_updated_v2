@@ -1,0 +1,25 @@
+---
+---
+<header class="header" id="header">
+  <slot />
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 16px 0;
+    background-color: var(--header-bg);
+    color: var(--header-text);
+    z-index: 20;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    transition: padding 0.3s ease, background-color 0.3s ease;
+  }
+
+  .header.scrolled {
+    padding: 8px 0;
+    background-color: var(--header-bg);
+  }
+</style>

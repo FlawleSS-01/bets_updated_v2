@@ -1,0 +1,16 @@
+---
+import { defaultLng } from "@/config/language";
+
+export const prerender = true;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content={`0; url=/${defaultLng}`} />
+    <link rel="canonical" href={`${import.meta.env.PUBLIC_DOMAIN}/${defaultLng}`} />
+    <title>Redirecting...</title>
+  </head>
+  <body></body>
+</html>

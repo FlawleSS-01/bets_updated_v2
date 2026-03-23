@@ -1,0 +1,46 @@
+{
+  "pages": {
+    "home": "Home",
+    "casino": "Casino",
+    "betting": "Bet",
+    "app": "App",
+    "login": "Login"
+  },
+  "actions": {
+    "login": "Login",
+    "register": "Register",
+    "download": "Download App"
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Quick Links",
+        "links": [
+          { "label": "Home", "href": "/{lang}" },
+          { "label": "Betting", "href": "/{lang}/betting" },
+          { "label": "Casino", "href": "/{lang}/casino" },
+          { "label": "Mobile App", "href": "/{lang}/app" },
+          { "label": "Login / Register", "href": "/{lang}/login" }
+        ]
+      },
+      {
+        "title": "Information",
+        "links": [
+          { "label": "About Us", "href": "#" },
+          { "label": "Terms & Conditions", "href": "#" },
+          { "label": "Privacy Policy", "href": "#" },
+          { "label": "Contact Support", "href": "#" }
+        ]
+      },
+      {
+        "title": "Contact",
+        "links": [
+          { "label": "Email: {email}", "href": "mailto:{email}" },
+          { "label": "24/7 Live Chat Support", "href": "#" },
+          { "label": "Phone: {phone}", "href": "tel:{phone}" }
+        ]
+      }
+    ],
+    "copyright": "© {year} {brand}. All rights reserved. | 18+ Only"
+  }
+}

@@ -1,0 +1,106 @@
+---
+import Button from "@/components/ui/Button/Button.astro";
+
+interface Props {
+  lang: string;
+  title: string;
+  description?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  variant?: "default" | "card";
+}
+
+const {
+  lang,
+  title,
+  description,
+  primaryButtonText,
+  primaryButtonHref,
+  secondaryButtonText,
+  secondaryButtonHref,
+  variant = "default",
+} = Astro.props;
+
+function resolveHref(href?: string): string | undefined {
+  if (!href) return undefined;
+  if (href.endsWith(".apk")) return import.meta.env.PUBLIC_APP;
+  return "/go";
+}
+---
+
+<section class:list={["cta-section", variant === "card" && "cta-card"]}>
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-title" set:html={title} />
+      {description && <p class="cta-desc">{description}</p>}
+
+      {(primaryButtonText || secondaryButtonText) && (
+        <div class="cta-actions">
+          {primaryButtonText && primaryButtonHref && (
+            <Button lang={lang} href={resolveHref(primaryButtonHref)} size="lg" component="a">
+              {primaryButtonText}
+            </Button>
+          )}
+          {secondaryButtonText && secondaryButtonHref && (
+            <Button lang={lang} href={resolveHref(secondaryButtonHref)} variant="outline" size="lg" component="a">
+              {secondaryButtonText}
+            </Button>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-section {
+    padding: 80px 24px;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-card .cta-inner {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 48px 32px;
+    max-width: 800px;
+  }
+
+  .cta-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .cta-desc {
+    font-size: 18px;
+    opacity: 0.8;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .cta-title {
+      font-size: 28px;
+    }
+
+    .cta-card .cta-inner {
+      padding: 32px 20px;
+    }
+  }
+</style>

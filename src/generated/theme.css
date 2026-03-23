@@ -1,0 +1,29 @@
+/* generated автоматически
+stamp: 2026-03-19T22:49:55.135Z
+seed: QWE123
+salt: ddba4cf8d7cd
+themeIndex: 48
+base: #071a12
+accent: #16a34a
+*/
+:root{
+  --page-bg: #091a12;
+  --page-text: #ffffff;
+
+  --main-bg: #0f1e17;
+  --main-text: #ffffff;
+
+  --header-bg: #16251e;
+  --header-text: #ffffff;
+
+  --footer-bg: #000d00;
+  --footer-text: #ffffff;
+
+  --btn-bg: #008532;
+  --btn-text: #ffffff;
+  --btn-hover-bg: #007e2b;
+  --btn-hover-text: #ffffff;
+
+  --link-hover-bg: rgb(0 133 50 / 0.22);
+  --link-hover-text: #ffffff;
+}

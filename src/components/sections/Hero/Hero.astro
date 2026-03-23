@@ -1,0 +1,229 @@
+---
+import type { BreadcrumbItem } from "@/types/content";
+import Button from "@/components/ui/Button/Button.astro";
+
+interface Props {
+  lang: string;
+  badge?: string;
+  badgeIcon?: string;
+  title: string;
+  description: string;
+  breadcrumb?: BreadcrumbItem[];
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  primaryButtonIcon?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  stats?: { value: string; label: string }[];
+}
+
+const {
+  lang,
+  badge,
+  badgeIcon,
+  title,
+  description,
+  breadcrumb,
+  primaryButtonText,
+  primaryButtonHref,
+  secondaryButtonText,
+  secondaryButtonHref,
+  primaryButtonIcon,
+  stats,
+} = Astro.props;
+
+function resolveHref(href?: string): string | undefined {
+  if (!href) return undefined;
+  if (href.endsWith(".apk")) return import.meta.env.PUBLIC_APP;
+  return "/go";
+}
+---
+
+<section class="hero">
+  <div class="container">
+    {breadcrumb && breadcrumb.length > 0 && (
+      <nav class="breadcrumb">
+        {breadcrumb.map((item, index) => (
+          <>
+            {index > 0 && <span class="breadcrumb-sep">&rsaquo;</span>}
+            {index === breadcrumb.length - 1 ? (
+              <span>{item.name}</span>
+            ) : (
+              <a href={item.url}>{item.name}</a>
+            )}
+          </>
+        ))}
+      </nav>
+    )}
+
+    {badge && (
+      <div class:list={["hero-badge", { "is-live": badgeIcon === "live" }]}>
+        {badge}
+      </div>
+    )}
+
+    <h1 set:html={title} />
+    <p class="hero-desc">{description}</p>
+
+    {(primaryButtonText || secondaryButtonText) && (
+      <div class="hero-actions">
+        {primaryButtonText && primaryButtonHref && (
+          <Button
+            lang={lang}
+            href={resolveHref(primaryButtonHref)}
+            size="lg"
+            component="a"
+          >
+            {primaryButtonIcon === "download" && (
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+              </svg>
+            )}
+            {primaryButtonText}
+          </Button>
+        )}
+        {secondaryButtonText && secondaryButtonHref && (
+          <Button
+            lang={lang}
+            href={resolveHref(secondaryButtonHref)}
+            variant="outline"
+            size="lg"
+            component="a"
+          >
+            {secondaryButtonText}
+          </Button>
+        )}
+      </div>
+    )}
+
+    {stats && stats.length > 0 && (
+      <div class="hero-stats">
+        {stats.map((s) => (
+          <div class="hero-stat">
+            <div class="hero-stat-value">{s.value}</div>
+            <div class="hero-stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 140px 24px 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .breadcrumb {
+    font-size: 14px;
+    margin-bottom: 24px;
+    opacity: 0.7;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .breadcrumb a:hover {
+    opacity: 1;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--link-hover-bg);
+    color: var(--btn-bg);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 24px;
+  }
+
+  .hero-badge.is-live::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    margin-right: 8px;
+    animation: blink 1.5s infinite;
+  }
+
+  h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero-desc {
+    font-size: 20px;
+    opacity: 0.8;
+    max-width: 680px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat-value {
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .hero-stat-label {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 120px 16px 60px;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+    }
+
+    .hero-stats {
+      gap: 20px;
+    }
+
+    .hero-stat-value {
+      font-size: 22px;
+    }
+  }
+</style>

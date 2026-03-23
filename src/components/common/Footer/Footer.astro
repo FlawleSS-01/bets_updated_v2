@@ -1,0 +1,182 @@
+---
+import Container from "@/components/common/Container/Container.astro";
+
+interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface FooterColumn {
+  title: string;
+  links: FooterLink[];
+}
+
+interface Props {
+  lang: string;
+  columns: FooterColumn[];
+  copyright: string;
+  specialBtn?: string;
+}
+
+const { lang, columns, copyright, specialBtn } = Astro.props;
+
+const brand = import.meta.env.PUBLIC_BRAND;
+const email = import.meta.env.PUBLIC_EMAIL;
+const phone = import.meta.env.PUBLIC_PHONE;
+const year = new Date().getFullYear().toString();
+
+function processText(text: string): string {
+  return text
+    .replace(/\{brand\}/g, brand)
+    .replace(/\{email\}/g, email)
+    .replace(/\{phone\}/g, phone)
+    .replace(/\{year\}/g, year);
+}
+
+function processHref(href: string): string {
+  let h = href
+    .replace(/\{email\}/g, email)
+    .replace(/\{phone\}/g, phone)
+    .replace(/\{lang\}/g, lang);
+
+  if (!h.startsWith("http") && !h.startsWith("mailto:") && !h.startsWith("tel:") && !h.startsWith("#")) {
+    h = h.replace(/^\/?/, "/");
+  }
+
+  return h;
+}
+---
+
+<footer class="footer">
+  <Container>
+    {specialBtn && (
+      <div class="footer-promo">
+        <a href="/go" target="_blank" rel="noopener noreferrer nofollow" class="footer-promo-link">
+          {processText(specialBtn)}
+        </a>
+      </div>
+    )}
+
+    <div class="footer-grid">
+      {columns.map((col) => (
+        <div class="footer-column">
+          <h4 class="footer-column-title">{processText(col.title)}</h4>
+          <ul class="footer-column-links">
+            {col.links.map((link) => (
+              <li>
+                <a
+                  href={processHref(link.href)}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer nofollow" : undefined}
+                >
+                  {processText(link.label)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="footer-bottom">
+      <a href={`/${lang}`} class="footer-logo">
+        <img src="/img/logo.webp" alt={brand} width="140" height="48" loading="lazy" />
+      </a>
+      <p class="footer-copyright">{processText(copyright)}</p>
+    </div>
+  </Container>
+</footer>
+
+<style>
+  .footer {
+    padding: 48px 0 32px;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .footer-promo {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .footer-promo-link {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .footer-promo-link:hover {
+    background: var(--btn-hover-bg);
+    transform: translateY(-1px);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .footer-column-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  .footer-column-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-column-links a {
+    font-size: 15px;
+    opacity: 0.85;
+    transition: opacity 0.2s ease;
+  }
+
+  .footer-column-links a:hover {
+    opacity: 1;
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .footer-logo img {
+    object-fit: contain;
+  }
+
+  .footer-copyright {
+    font-size: 14px;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .footer-column-links {
+      align-items: center;
+    }
+  }
+</style>

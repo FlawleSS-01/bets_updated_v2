@@ -1,0 +1,45 @@
+---
+export interface Props {
+  lang: string;
+  large?: boolean;
+}
+
+const { lang, large } = Astro.props as Props;
+---
+
+<a href={`/${lang}`} class:list={["logo", large && "logo--large"]}>
+  <img
+    src="/img/logo.webp"
+    class="logo-img"
+    alt={import.meta.env.PUBLIC_BRAND}
+    width={large ? "200" : "140"}
+    height={large ? "68" : "48"}
+  />
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .logo-img {
+    height: 48px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .logo--large .logo-img {
+    height: 68px;
+  }
+
+  @media (max-width: 768px) {
+    .logo-img {
+      height: 36px;
+    }
+
+    .logo--large .logo-img {
+      height: 48px;
+    }
+  }
+</style>

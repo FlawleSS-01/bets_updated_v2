@@ -1,0 +1,174 @@
+---
+import type { MetatagsI } from "@/components/common/MetaTags";
+import ContentSection from "@/components/sections/ContentSection/ContentSection.astro";
+import CtaSection from "@/components/sections/CtaSection/CtaSection.astro";
+import FaqSection from "@/components/sections/FaqSection.astro";
+import FeaturesSection from "@/components/sections/FeaturesSection/FeaturesSection.astro";
+import Hero from "@/components/sections/Hero/Hero.astro";
+import StepsSection from "@/components/sections/StepsSection.astro";
+import { defaultLng, supportedLanguages } from "@/config/language";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { getText } from "@/locales/getText";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (() => {
+  return supportedLanguages.map((lang) => ({ params: { lang } }));
+}) satisfies GetStaticPaths;
+
+const { lang } = Astro.params;
+const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
+
+const commonTexts = await getText(langCode, "common");
+const metaCanons = await import("P/canon.json");
+const { meta, hero, sections } = await getText(langCode, "home");
+
+const schema = {
+  website: {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: import.meta.env.PUBLIC_BRAND,
+    url: import.meta.env.PUBLIC_DOMAIN,
+    description: meta.description,
+  },
+  organization: {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: import.meta.env.PUBLIC_BRAND,
+    url: import.meta.env.PUBLIC_DOMAIN,
+    description: meta.description,
+  },
+  faqPage: {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity:
+      sections
+        .find((s: any) => s.type === "faq")
+        ?.items?.map((item: any) => ({
+          "@type": "Question",
+          name: item.question,
+          acceptedAnswer: { "@type": "Answer", text: item.answer },
+        })) || [],
+  },
+  breadcrumbList: {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: import.meta.env.PUBLIC_DOMAIN,
+      },
+    ],
+  },
+  webPage: {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: meta.title,
+    description: meta.description,
+    url: import.meta.env.PUBLIC_DOMAIN,
+    isPartOf: {
+      "@type": "WebSite",
+      name: import.meta.env.PUBLIC_BRAND,
+      url: import.meta.env.PUBLIC_DOMAIN,
+    },
+    inLanguage: lang,
+    datePublished: new Date().toISOString().split("T")[0],
+    dateModified: new Date().toISOString().split("T")[0],
+  },
+};
+
+const metaTags: MetatagsI = {
+  title: meta.title,
+  descr: meta.description,
+  keywords: meta.keywords,
+  metaCanons: (metaCanons as any).home,
+};
+
+const findSection = (type: string) => sections.find((s: any) => s.type === type);
+let contentIndex = 0;
+---
+
+<BaseLayout commonTexts={commonTexts} schema={schema} metatags={metaTags}>
+  {hero && (
+    <Hero
+      lang={lang}
+      badge={hero.badge}
+      badgeIcon={hero.badgeIcon}
+      title={hero.title}
+      description={hero.description}
+      primaryButtonText={hero.primaryButtonText}
+      primaryButtonHref={hero.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : hero.primaryButtonHref}
+      primaryButtonIcon={hero.primaryButtonIcon}
+      secondaryButtonText={hero.secondaryButtonText}
+      secondaryButtonHref={hero.secondaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : hero.secondaryButtonHref}
+      stats={hero.stats}
+    />
+  )}
+
+  {sections.map((section: any) => {
+    if (section.type === "content") {
+      contentIndex++;
+      return (
+        <ContentSection
+          lang={lang}
+          title={section.title}
+          description={section.description}
+          image={section.image}
+          imageAlt={section.imageAlt}
+          buttonText={section.buttonText}
+          buttonHref={section.buttonHref}
+          reverse={contentIndex % 2 === 0}
+        />
+      );
+    }
+    if (section.type === "features") {
+      return (
+        <FeaturesSection
+          tag={section.tag}
+          tagIcon={section.tagIcon}
+          title={section.title}
+          description={section.description}
+          items={section.items}
+        />
+      );
+    }
+    if (section.type === "faq") {
+      return (
+        <FaqSection
+          tag={section.tag}
+          tagIcon={section.tagIcon}
+          title={section.title}
+          highlightedText={section.highlightedText}
+          description={section.description}
+          items={section.items}
+        />
+      );
+    }
+    if (section.type === "steps") {
+      return (
+        <StepsSection
+          tag={section.tag}
+          tagIcon={section.tagIcon}
+          title={section.title}
+          description={section.description}
+          items={section.items}
+        />
+      );
+    }
+    if (section.type === "cta") {
+      return (
+        <CtaSection
+          lang={lang}
+          title={section.title}
+          description={section.description}
+          primaryButtonText={section.primaryButtonText}
+          primaryButtonHref={section.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.primaryButtonHref}
+          secondaryButtonText={section.secondaryButtonText}
+          secondaryButtonHref={section.secondaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.secondaryButtonHref}
+        />
+      );
+    }
+    return null;
+  })}
+</BaseLayout>
