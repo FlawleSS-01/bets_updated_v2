@@ -1,50 +1,46 @@
 {
-  "meta": {
-    "title": "Login - Access Your Account",
-    "description": "Safely log into your account and enjoy seamless gaming experiences.",
-    "keywords": "login, sign in, account access, register, secure login"
-  },
-  "hero": {
-    "badge": "🔐 Secure Access",
-    "title": "Secure Access to Your Account",
-    "description": "Welcome to the login portal, where secure access to your gaming account is our priority. Enjoy a seamless and protected login experience.",
-    "primaryButtonText": "Login Now",
-    "primaryButtonHref": "/go"
-  },
-  "sections": [
+  "title": "Login - Access Your Account",
+  "description": "Safely log into your account and enjoy seamless gaming experiences.",
+  "h1": "Login | Secure Access to Your Account",
+  "h1Description": "Welcome to the login portal, where secure access to your gaming account is our priority. Enjoy a seamless and protected login experience.",
+  "h1Image": "login1",
+  "stats": [],
+  "blocks": [
     {
-      "type": "content",
-      "title": "Prioritizing Your Security",
-      "description": "Advanced encryption technologies protect your personal information. Log in confidently from any location without worrying about unauthorized access."
-    },
-    {
-      "type": "content",
-      "title": "Exciting Features Awaiting You",
-      "description": "Once logged in, explore personalized game recommendations, exclusive promotions, and seamless transitions between games.",
-      "buttonText": "Get Started",
-      "buttonHref": "/go"
-    },
-    {
-      "type": "steps",
-      "title": "Forgot Your Password? We've Got You Covered",
-      "description": "Follow these steps to regain access to your account.",
-      "items": [
-        { "title": "Visit the Login Page", "description": "Navigate to the login page and select 'Forgot Password.'" },
-        { "title": "Enter Your Email", "description": "Provide the email associated with your account to receive a reset link." },
-        { "title": "Check Your Inbox", "description": "Look for an email containing your password reset instructions." },
-        { "title": "Click the Reset Link", "description": "Open the email and click on the provided link to start the reset process." },
-        { "title": "Create a New Password", "description": "Choose a strong, unique password to secure your account." },
-        { "title": "Log In with Your New Password", "description": "Return to the login page and access your account using your updated credentials." }
+      "blockType": "security",
+      "elements": [
+        { "type": "h2", "text": "Prioritizing Your Security" },
+        { "type": "paragraph", "text": "Advanced encryption technologies protect your personal information. Log in confidently from any location without worrying about unauthorized access." },
+        { "type": "image", "src": "login2" }
       ]
     },
     {
-      "type": "cta",
-      "title": "Ready to Play?",
-      "description": "Log in or create your account to start enjoying our games.",
-      "primaryButtonText": "Login",
-      "primaryButtonHref": "/go",
-      "secondaryButtonText": "Register",
-      "secondaryButtonHref": "/go"
+      "blockType": "features",
+      "elements": [
+        { "type": "h2", "text": "Exciting Features Awaiting You" },
+        { "type": "paragraph", "text": "Once logged in, explore personalized game recommendations, exclusive promotions, and seamless transitions between games." },
+        { "type": "image", "src": "login3" },
+        { "type": "button" }
+      ]
+    },
+    {
+      "blockType": "forgot",
+      "elements": [
+        { "type": "h2", "text": "Forgot Your Password? We've Got You Covered" },
+        { "type": "paragraph", "text": "Follow these steps to regain access to your account." },
+        { "type": "image", "src": "login4" },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Visit the Login Page", "description": "Navigate to the login page and select 'Forgot Password.'" },
+            { "title": "Enter Your Email", "description": "Provide the email associated with your account to receive a reset link." },
+            { "title": "Check Your Inbox", "description": "Look for an email containing your password reset instructions." },
+            { "title": "Click the Reset Link", "description": "Open the email and click on the provided link to start the reset process." },
+            { "title": "Create a New Password", "description": "Choose a strong, unique password to secure your account." },
+            { "title": "Log In with Your New Password", "description": "Return to the login page and access your account using your updated credentials." }
+          ]
+        }
+      ]
     }
   ]
 }

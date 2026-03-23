@@ -1,45 +1,20 @@
 ---
 export interface Props {
   lang: string;
-  large?: boolean;
+  className?: string;
 }
 
-const { lang, large } = Astro.props as Props;
+const { lang, className = "" } = Astro.props;
 ---
 
-<a href={`/${lang}`} class:list={["logo", large && "logo--large"]}>
+<a href={`/${lang}`} class={className}>
   <img
     src="/img/logo.webp"
-    class="logo-img"
-    alt={import.meta.env.PUBLIC_BRAND}
-    width={large ? "200" : "140"}
-    height={large ? "68" : "48"}
+    sizes="120px"
+    alt={`${import.meta.env.PUBLIC_BRAND} logo`}
+    width="120"
+    height="60"
+    loading="eager"
+    decoding="async"
   />
 </a>
-
-<style>
-  .logo {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .logo-img {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-  }
-
-  .logo--large .logo-img {
-    height: 68px;
-  }
-
-  @media (max-width: 768px) {
-    .logo-img {
-      height: 36px;
-    }
-
-    .logo--large .logo-img {
-      height: 48px;
-    }
-  }
-</style>

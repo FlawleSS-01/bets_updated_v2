@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+}
+
+const { title = "", description = "", items = [] } = Astro.props;
+
+const seen = new Set<string>();
+const providers = (items || [])
+  .map((it) => ({ title: (it?.title || "").trim(), description: (it?.description || "").trim() }))
+  .filter((x) => {
+    if (!x.title) return false;
+    const key = x.title.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  })
+  .slice(0, 12);
+---
+
+{providers.length > 0 && (
+  <section class="vblock vproviders">
+    <div class="vcontainer">
+      <header class="vproviders__head">
+        {title && <h2 class="vproviders__title">{title}</h2>}
+        {description && <p class="vproviders__desc">{description}</p>}
+      </header>
+      <div class="vproviders__grid" aria-label="Providers">
+        {providers.map((p) => (
+          <article class="vproviders__card">
+            <h3 class="vproviders__cardTitle">{p.title}</h3>
+            {p.description
+              ? <p class="vproviders__cardText">{p.description}</p>
+              : <p class="vproviders__cardText vproviders__cardText--muted">Trusted provider in our catalog.</p>
+            }
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, useEffect, type ReactNode } from "react";
 
 interface NavItem {
   key: string;
@@ -10,38 +10,63 @@ interface NavItem {
 interface NavProps {
   navItems: NavItem[];
   children?: ReactNode;
+  actions?: ReactNode;
 }
 
-export default function Nav({ navItems, children }: NavProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Nav({ navItems, children, actions }: NavProps) {
+  const slotContent = actions ?? children;
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (open) root.classList.add("menu-open");
+    else root.classList.remove("menu-open");
+    return () => root.classList.remove("menu-open");
+  }, [open]);
+
+  const closeMenu = () => setOpen(false);
 
   return (
-    <div className="nav-wrapper">
+    <>
+      <div className={`header-1__menu${open ? " _open" : ""}`}>
+        <nav className="header-1__menu-nav" aria-label="Main navigation">
+          <ul className="header-1__menu-list" id="site-menu">
+            <li className="header-1__menu-item-logo">
+              <a
+                href="/"
+                className="menu__close"
+                aria-label="Close menu"
+                onClick={closeMenu}
+              />
+            </li>
+            {navItems.map((item) => (
+              <li className="header-1__menu-item" key={item.key}>
+                <a
+                  href={item.href}
+                  className={`header-1__menu-link menu__close${item.active ? " is-active" : ""}`}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+
+      <div className="header-1__buttons">
+        <div className="header_login_buttons">{slotContent}</div>
+      </div>
+
       <button
-        className={`nav-burger ${isOpen ? "is-open" : ""}`}
-        onClick={() => setIsOpen(!isOpen)}
+        className="header-1__menu-burger icon-menu"
         aria-label="Toggle menu"
+        aria-expanded={open}
+        aria-controls="site-menu"
+        onClick={() => setOpen((v) => !v)}
       >
         <span />
-        <span />
-        <span />
       </button>
-
-      <div className={`nav-menu ${isOpen ? "is-open" : ""}`}>
-        <nav className="nav-links">
-          {navItems.map((item) => (
-            <a
-              key={item.key}
-              href={item.href}
-              className={`nav-link ${item.active ? "is-active" : ""}`}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="nav-actions">{children}</div>
-      </div>
-    </div>
+    </>
   );
 }

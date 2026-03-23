@@ -1,50 +1,53 @@
 {
-  "meta": {
-    "title": "Sports Betting",
-    "description": "Engage in thrilling sports betting. Explore diverse options and competitive odds for the best betting experience.",
-    "keywords": "sports betting, cricket, football, tennis, live betting, odds, online betting"
-  },
-  "hero": {
-    "badge": "⚽ Sports Betting",
-    "title": "Sports Betting",
-    "description": "Dive into the exciting world of sports betting. Our platform offers a wide array of sports and betting options to cater to every enthusiast.",
-    "primaryButtonText": "Bet Now",
-    "primaryButtonHref": "/go"
-  },
-  "sections": [
+  "title": "Sports Betting",
+  "description": "Engage in thrilling sports betting. Explore diverse options and competitive odds for the best betting experience.",
+  "h1": "Sports Betting",
+  "h1Description": "Dive into the exciting world of sports betting. Our platform offers a wide array of sports and betting options to cater to every enthusiast.",
+  "h1Image": "bets1",
+  "stats": [],
+  "blocks": [
     {
-      "type": "content",
-      "title": "Welcome to Sports Betting",
-      "description": "The ultimate sports betting destination. A seamless and exhilarating betting experience with a diverse range of sports and events."
-    },
-    {
-      "type": "features",
-      "title": "Key Betting Features",
-      "description": "Live betting options, competitive odds, secure payment options and fast withdrawal process.",
-      "items": [
-        { "title": "Live Betting", "description": "Place bets in real-time as the match progresses.", "icon": "📡" },
-        { "title": "Competitive Odds", "description": "Enjoy some of the best odds available for various sports.", "icon": "📊" },
-        { "title": "Secure Transactions", "description": "Bet confidently with secure payment methods.", "icon": "🔐" },
-        { "title": "Fast Withdrawals", "description": "Quickly access your winnings with efficient withdrawal.", "icon": "⚡" }
+      "blockType": "welcome",
+      "elements": [
+        { "type": "h2", "text": "Welcome to Sports Betting" },
+        { "type": "paragraph", "text": "The ultimate sports betting destination. A seamless and exhilarating betting experience with a diverse range of sports and events." },
+        { "type": "image", "src": "bets2" }
       ]
     },
     {
-      "type": "features",
-      "title": "Popular Sports for Betting",
-      "description": "A vast selection of sports to satisfy every fan's passion.",
-      "items": [
-        { "title": "Cricket", "description": "Place bets on local and international cricket matches.", "icon": "🏏" },
-        { "title": "Football", "description": "Bet on major leagues and tournaments worldwide.", "icon": "⚽" },
-        { "title": "Tennis", "description": "Explore betting options on grand slams and ATP tours.", "icon": "🎾" },
-        { "title": "Basketball", "description": "Wager on NBA games and other top basketball events.", "icon": "🏀" }
+      "blockType": "features",
+      "elements": [
+        { "type": "h2", "text": "Key Betting Features" },
+        { "type": "paragraph", "text": "Live betting options, competitive odds, secure payment options and fast withdrawal process." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Live Betting", "description": "Place bets in real-time as the match progresses." },
+            { "title": "Competitive Odds", "description": "Enjoy some of the best odds available for various sports." },
+            { "title": "Secure Transactions", "description": "Bet confidently with secure payment methods." },
+            { "title": "Fast Withdrawals", "description": "Quickly access your winnings with efficient withdrawal." }
+          ]
+        },
+        { "type": "image", "src": "bets3" },
+        { "type": "button" }
       ]
     },
     {
-      "type": "cta",
-      "title": "Place Your First Bet",
-      "description": "Join thousands of sports fans and start betting on your favorite events.",
-      "primaryButtonText": "Get Started",
-      "primaryButtonHref": "/go"
+      "blockType": "sports",
+      "elements": [
+        { "type": "h2", "text": "Popular Sports for Betting" },
+        { "type": "paragraph", "text": "A vast selection of sports to satisfy every fan's passion." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Cricket", "description": "Place bets on local and international cricket matches." },
+            { "title": "Football", "description": "Bet on major leagues and tournaments worldwide." },
+            { "title": "Tennis", "description": "Explore betting options on grand slams and ATP tours." },
+            { "title": "Basketball", "description": "Wager on NBA games and other top basketball events." }
+          ]
+        },
+        { "type": "button" }
+      ]
     }
   ]
 }

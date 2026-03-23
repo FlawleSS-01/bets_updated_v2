@@ -1,0 +1,38 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  showButton?: boolean;
+}
+
+const { title = "", description = "", items = [], showButton = false } = Astro.props;
+---
+
+{(title || description || items.length > 0) && (
+  <section class="vblock vfeatures">
+    <div class="vcontainer">
+      <div class="vcontainer_title_container">
+        {title && <h2 class="vfeatures__title">{title}</h2>}
+        {description && <p class="vfeatures__desc">{description}</p>}
+      </div>
+      {items.length > 0 && (
+        <div class="vfeatures__grid">
+          {items.map((it) => (
+            <article class="vfeatures__card">
+              <h3 class="vfeatures__cardTitle">{it.title}</h3>
+              <p class="vfeatures__cardText">{it.description}</p>
+            </article>
+          ))}
+        </div>
+      )}
+      {showButton && (
+        <div class="vfeatures__cta">
+          <ButtonsGroup />
+        </div>
+      )}
+    </div>
+  </section>
+)}

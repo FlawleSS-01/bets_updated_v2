@@ -1,0 +1,51 @@
+---
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  texts: {
+    title: string;
+    subtitle: string;
+    buttonText: string;
+    ariaLabel: string;
+    alt: string;
+  };
+}
+
+const { texts } = Astro.props;
+const refUrl = "/go";
+
+const bannerSet: Record<string, string> = { 460: "banner460", 600: "banner600" };
+const bannerSrc = pickLargest(bannerSet);
+---
+
+<section class="intro_banner">
+  <a
+    href={refUrl}
+    class="intro_banner_full_link"
+    rel="nofollow"
+    aria-label={texts.ariaLabel}
+    target="_blank"
+  />
+
+  <img
+    src={bannerSrc}
+    srcset={srcSetFrom(bannerSet)}
+    sizes="100vw"
+    alt={texts.alt}
+    class="intro_banner_bg"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+    width="600"
+    height="336"
+  />
+
+  <div class="intro_banner_container">
+    <p class="intro_banner_title">{texts.title}</p>
+    <p class="intro_banner_subtitle">{texts.subtitle}</p>
+  </div>
+
+  <a href={refUrl} rel="nofollow" class="intro_banner_link" target="_blank">
+    {texts.buttonText}
+  </a>
+</section>

@@ -1,0 +1,46 @@
+---
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  paragraphs?: string[];
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+}
+
+const { title = "", paragraphs = [], items = [], imageSet, imageAlt = "", imageTitle = "" } = Astro.props;
+const desc = paragraphs?.[0] || "";
+const tips = Array.isArray(items) ? items.slice(0, 6) : [];
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || paragraphs.length > 0 || tips.length > 0) && (
+  <section class="vblock vforgot">
+    <div class="vcontainer">
+      <header class="vforgot__head">
+        {title && <h2 class="vforgot__title">{title}</h2>}
+        {desc && <p class="vforgot__desc">{desc}</p>}
+      </header>
+      {imgSrc && (
+        <div class="vforgot__hero">
+          <img class="vforgot__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 860px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="960" height="540" />
+        </div>
+      )}
+      {tips.length > 0 && (
+        <div class="vforgot__grid">
+          {tips.map((it, idx) => (
+            <article class="vforgot__card">
+              <div class="vforgot__num">{idx + 1}.</div>
+              <div class="vforgot__body">
+                {it.title && <h3 class="vforgot__cardTitle">{it.title}</h3>}
+                {it.description && <p class="vforgot__cardText">{it.description}</p>}
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+)}

@@ -1,0 +1,45 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title: string;
+  description: string;
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+}
+
+const { title, description, imageSet, imageAlt = "", imageTitle = "" } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+<section class="vblock vhero">
+  <div class="vcontainer vhero__grid">
+    <div class="vhero__left">
+      {title && <h1 class="vhero__title">{title}</h1>}
+      {description && <p class="vhero__desc">{description}</p>}
+      <div class="vhero__cta">
+        <ButtonsGroup />
+      </div>
+    </div>
+    <div class="vhero__right">
+      <div class="vhero__card" aria-hidden="true">
+        {imgSrc && (
+          <img
+            class="vhero__img"
+            src={imgSrc}
+            srcset={srcSetFrom(imageSet)}
+            sizes="(max-width: 920px) 92vw, 520px"
+            alt={imageAlt}
+            title={imageTitle}
+            loading="lazy"
+            decoding="async"
+            width="600"
+            height="336"
+          />
+        )}
+      </div>
+    </div>
+  </div>
+</section>

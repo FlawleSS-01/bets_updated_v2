@@ -1,0 +1,20 @@
+---
+interface Props {
+  items: { value: string; label: string }[];
+}
+
+const { items = [] } = Astro.props;
+---
+
+{items.length > 0 && (
+  <section class="vblock vstats">
+    <div class="vcontainer vstats__grid">
+      {items.map((it) => (
+        <div class="vstats__card">
+          <div class="vstats__value">{it.value}</div>
+          <div class="vstats__label">{it.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+)}

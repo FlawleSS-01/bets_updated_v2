@@ -1,0 +1,50 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+}
+
+const { title = "", description = "", items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const big = items[0];
+const rest = items.slice(1);
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || items.length > 0) && (
+  <section class="vblock vbento">
+    <div class="vcontainer">
+      <div class="vbento__head">
+        {title && <h2 class="vbento__title">{title}</h2>}
+        {description && <p class="vbento__desc">{description}</p>}
+      </div>
+      <div class="vbento__grid">
+        {big && (
+          <article class="vbento__big">
+            <h3 class="vbento__cardTitle">{big.title}</h3>
+            <p class="vbento__cardText">{big.description}</p>
+            {imgSrc && (
+              <img class="vbento__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+            )}
+          </article>
+        )}
+        <div class="vbento__small">
+          {rest.map((it) => (
+            <article class="vbento__card">
+              <h3 class="vbento__cardTitle">{it.title}</h3>
+              <p class="vbento__cardText">{it.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+      {showButton && <div class="vbento__cta"><ButtonsGroup /></div>}
+    </div>
+  </section>
+)}

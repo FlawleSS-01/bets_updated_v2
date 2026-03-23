@@ -1,25 +1,44 @@
 ---
+import Logo from "@/components/ui/Logo/Logo.astro";
+import { Nav } from "@/reactComponents/Nav";
+
+interface Props {
+  lang: string;
+  navItems: { key: string; label: string; href: string; active: boolean }[];
+  loginLabel: string;
+  downloadLabel: string;
+}
+
+const { lang, navItems, loginLabel, downloadLabel } = Astro.props;
+const appPath = import.meta.env.PUBLIC_APP || "/app.apk";
+const isApk = appPath.endsWith(".apk");
 ---
-<header class="header" id="header">
-  <slot />
+
+<header class="header-1">
+  <div class="header-1__container">
+    <div class="header-1__body">
+      <Logo lang={lang} className="header-1__logo" />
+
+      <Nav client:load navItems={navItems}>
+        <a
+          slot="actions"
+          href="/go"
+          rel="nofollow"
+          class="header-1__button button"
+          target="_blank"
+        >
+          {loginLabel}
+        </a>
+        <a
+          slot="actions"
+          href={appPath}
+          rel="nofollow"
+          class="header-1__button button"
+          {...(isApk ? { download: `${import.meta.env.PUBLIC_BRAND}.apk` } : { target: "_blank" })}
+        >
+          {downloadLabel}
+        </a>
+      </Nav>
+    </div>
+  </div>
 </header>
-
-<style>
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 16px 0;
-    background-color: var(--header-bg);
-    color: var(--header-text);
-    z-index: 20;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-    transition: padding 0.3s ease, background-color 0.3s ease;
-  }
-
-  .header.scrolled {
-    padding: 8px 0;
-    background-color: var(--header-bg);
-  }
-</style>

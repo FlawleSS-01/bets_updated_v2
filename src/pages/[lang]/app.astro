@@ -1,14 +1,12 @@
 ---
 import type { MetatagsI } from "@/components/common/MetaTags";
-import ContentSection from "@/components/sections/ContentSection/ContentSection.astro";
-import CtaSection from "@/components/sections/CtaSection/CtaSection.astro";
-import FaqSection from "@/components/sections/FaqSection.astro";
-import FeaturesSection from "@/components/sections/FeaturesSection/FeaturesSection.astro";
-import Hero from "@/components/sections/Hero/Hero.astro";
-import StepsSection from "@/components/sections/StepsSection.astro";
+import Banner from "@/components/common/Banner/Banner.astro";
+import Section from "@/components/blocks/Section.astro";
+import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
 import { defaultLng, supportedLanguages } from "@/config/language";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getText } from "@/locales/getText";
+import { buildSeoSchema } from "@/lib/seoSchema";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (() => {
@@ -20,121 +18,65 @@ const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
 
 const commonTexts = await getText(langCode, "common");
 const metaCanons = await import("P/canon.json");
-const page = await getText(langCode, "app");
+const pageData = await getText(langCode, "app");
 
-const breadcrumbs = [
-  { name: commonTexts.pages.home, url: `/${lang}` },
-  { name: commonTexts.pages.app, url: `/${lang}/app` },
-];
+const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
+const brandName = import.meta.env.PUBLIC_BRAND || "";
+const apkPath = import.meta.env.PUBLIC_APP || "/app.apk";
 
-const schema = {
-  breadcrumbList: {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbs.map((bc, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: bc.name,
-      item: `${import.meta.env.PUBLIC_DOMAIN}${bc.url}`,
-    })),
-  },
-  webPage: {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: page.meta.title,
-    description: page.meta.description,
-    url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}/app`,
-    isPartOf: {
-      "@type": "WebSite",
-      name: import.meta.env.PUBLIC_BRAND,
-      url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}`,
-    },
-    inLanguage: lang,
-    datePublished: new Date().toISOString().split("T")[0],
-    dateModified: new Date().toISOString().split("T")[0],
-  },
-  SoftwareApplication: {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: import.meta.env.PUBLIC_BRAND,
-    operatingSystem: "Android",
-    applicationCategory: "GameApplication",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
-  },
+const imageMap: Record<string, Record<number, string>> = {
+  app1: { 360: "app1_360", 460: "app1_460", 600: "app1_600" },
+  app2: { 360: "app2_360", 460: "app2_460", 600: "app2_600" },
+  app3: { 360: "app3_360", 460: "app3_460", 600: "app3_600" },
+  app4: { 360: "app4_360", 460: "app4_460", 600: "app4_600" },
 };
 
+const imageDescription = commonTexts.imageDescription?.app || {};
+const getImageMeta = (key: string) => imageDescription[key] || { alt: "", title: "" };
+const getImageSet = (key: string): Record<string, string> | undefined =>
+  imageMap[key] as Record<string, string> | undefined;
+
+const h1ImageSet = getImageSet(pageData.h1Image);
+
+const schema = buildSeoSchema({
+  page: "app",
+  baseUrl,
+  brandName,
+  lang,
+  title: pageData.title,
+  description: pageData.description,
+  apkPath,
+});
+
 const metaTags: MetatagsI = {
-  title: page.meta.title,
-  descr: page.meta.description,
-  keywords: page.meta.keywords,
+  title: pageData.title,
+  descr: pageData.description,
   metaCanons: (metaCanons as any).app,
 };
 
-let contentIndex = 0;
+const siteSeed = [brandName, baseUrl, lang].join("|");
 ---
 
-<BaseLayout schema={schema} commonTexts={commonTexts} metatags={metaTags}>
-  <Hero
-    lang={lang}
-    badge={page.hero.badge}
-    title={page.hero.title}
-    description={page.hero.description}
-    breadcrumb={breadcrumbs}
-    primaryButtonText={page.hero.primaryButtonText}
-    primaryButtonHref={page.hero.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : page.hero.primaryButtonHref}
-    primaryButtonIcon={page.hero.primaryButtonIcon}
-  />
+<BaseLayout commonTexts={commonTexts} schema={schema} metatags={metaTags}>
+  <Banner texts={commonTexts.banner} />
 
-  {page.sections.map((section: any) => {
-    if (section.type === "content") {
-      contentIndex++;
-      return (
-        <ContentSection
-          lang={lang}
-          title={section.title}
-          description={section.description}
-          image={section.image}
-          imageAlt={section.imageAlt}
-          buttonText={section.buttonText}
-          buttonHref={section.buttonHref}
-          reverse={contentIndex % 2 === 0}
-        />
-      );
-    }
-    if (section.type === "features") {
-      return (
-        <FeaturesSection
-          tag={section.tag}
-          tagIcon={section.tagIcon}
-          title={section.title}
-          description={section.description}
-          items={section.items}
-        />
-      );
-    }
-    if (section.type === "faq") {
-      return <FaqSection title={section.title} items={section.items} />;
-    }
-    if (section.type === "steps") {
-      return <StepsSection title={section.title} description={section.description} items={section.items} />;
-    }
-    if (section.type === "cta") {
-      return (
-        <CtaSection
-          lang={lang}
-          title={section.title}
-          description={section.description}
-          primaryButtonText={section.primaryButtonText}
-          primaryButtonHref={section.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.primaryButtonHref}
-          secondaryButtonText={section.secondaryButtonText}
-          secondaryButtonHref={section.secondaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.secondaryButtonHref}
-        />
-      );
-    }
-    return null;
-  })}
+  {(pageData.h1 || pageData.h1Description) && (
+    <Section
+      title={pageData.h1}
+      text={pageData.h1Description}
+      isMainTitle={true}
+      imageSet={h1ImageSet}
+      imageAlt={getImageMeta(pageData.h1Image)?.alt}
+      imageTitle={getImageMeta(pageData.h1Image)?.title}
+      showButton={true}
+    />
+  )}
+
+  <BlocksRenderer
+    blocks={pageData.blocks || []}
+    getImageSet={getImageSet}
+    getImageMeta={getImageMeta}
+    seed={siteSeed}
+    pageKey="app"
+  />
 </BaseLayout>

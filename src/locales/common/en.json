@@ -1,46 +1,77 @@
 {
-  "pages": {
+  "header": {
     "home": "Home",
     "casino": "Casino",
-    "betting": "Bet",
-    "app": "App",
-    "login": "Login"
-  },
-  "actions": {
     "login": "Login",
-    "register": "Register",
-    "download": "Download App"
+    "app": "App",
+    "betting": "Bet",
+    "download": "Download"
   },
   "footer": {
-    "columns": [
-      {
-        "title": "Quick Links",
-        "links": [
-          { "label": "Home", "href": "/{lang}" },
-          { "label": "Betting", "href": "/{lang}/betting" },
-          { "label": "Casino", "href": "/{lang}/casino" },
-          { "label": "Mobile App", "href": "/{lang}/app" },
-          { "label": "Login / Register", "href": "/{lang}/login" }
-        ]
-      },
-      {
-        "title": "Information",
-        "links": [
-          { "label": "About Us", "href": "#" },
-          { "label": "Terms & Conditions", "href": "#" },
-          { "label": "Privacy Policy", "href": "#" },
-          { "label": "Contact Support", "href": "#" }
-        ]
-      },
-      {
-        "title": "Contact",
-        "links": [
-          { "label": "Email: {email}", "href": "mailto:{email}" },
-          { "label": "24/7 Live Chat Support", "href": "#" },
-          { "label": "Phone: {phone}", "href": "tel:{phone}" }
-        ]
-      }
-    ],
-    "copyright": "© {year} {brand}. All rights reserved. | 18+ Only"
+    "paymentMethodsTitle": "Available Payment Methods",
+    "navigation": "Navigation",
+    "links": {
+      "home": "Home",
+      "casino": "Casino",
+      "login": "Login",
+      "app": "App",
+      "betting": "Bet"
+    },
+    "ageNotice": "We inform you that the website is restricted to individuals aged 18 or older. Thank you for your understanding.",
+    "ageLimit": "18+"
+  },
+  "banner": {
+    "title": "GET YOUR WELCOME BONUS",
+    "subtitle": "100 FREE SPINS",
+    "buttonText": "CLAIM BONUS",
+    "ariaLabel": "Claim bonus",
+    "alt": "Welcome bonus banner"
+  },
+  "buttons": {
+    "download": "DOWNLOAD APP",
+    "login": "LOGIN"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      { "question": "What types of games are available?", "answer": "We offer a wide range of games including slots, table games, and live dealer options. Players can enjoy various genres tailored to their preferences." },
+      { "question": "Is the casino safe and secure?", "answer": "Yes, we prioritize player safety. We use advanced encryption technologies to protect your personal information and ensure secure transactions." },
+      { "question": "How do I deposit money into my account?", "answer": "Depositing funds is easy. Simply log in to your account, navigate to the cashier section, and choose your preferred payment method to make a deposit." },
+      { "question": "What bonuses are available for new players?", "answer": "New players can take advantage of generous welcome bonuses, including deposit matches and free spins. Check our promotions page for the latest offers." },
+      { "question": "Can I play on mobile devices?", "answer": "Absolutely! The platform is optimized for mobile play, and you can access games through the app or your mobile browser." },
+      { "question": "How do I contact customer support?", "answer": "You can reach our customer support team via live chat or email. We offer 24/7 assistance to ensure all your questions are answered promptly." }
+    ]
+  },
+  "imageDescription": {
+    "app": {
+      "app1": { "alt": "Mobile gaming experience with the app", "title": "App — Enjoy seamless gaming on your smartphone" },
+      "app2": { "alt": "Using the smartphone app during everyday life", "title": "App — Fast, responsive, and optimized for all devices" },
+      "app3": { "alt": "Live stats and sports features on mobile", "title": "Mobile App — Your complete hub for casino and sports" },
+      "app4": { "alt": "Casino chips and bonus elements for app rewards", "title": "App — Unlock exclusive bonuses available only in the app" }
+    },
+    "casino": {
+      "casino1": { "alt": "Premium online casino atmosphere", "title": "Casino — Step inside our high-end casino experience" },
+      "casino2": { "alt": "Professional dealer at the roulette table", "title": "Live Casino — Join thrilling real-dealer tables" },
+      "casino3": { "alt": "Vibrant slot machines with exciting themes", "title": "Slots — Thousands of exciting themes and jackpots" },
+      "casino4": { "alt": "Golden coins and spinning roulette wheel", "title": "Casino Games — Enjoy nonstop entertainment" }
+    },
+    "betting": {
+      "bets1": { "alt": "Diverse game collection online", "title": "Games — Explore our rich library of casino classics" },
+      "bets2": { "alt": "Celebrating a winning moment while gaming", "title": "Games — Discover modern slots and table adventures" },
+      "bets3": { "alt": "Engaging live and instant-win games", "title": "Live Games — Take part in high-energy casino action" },
+      "bets4": { "alt": "Vibrant slot machine with winning icons", "title": "Slot Zone — Spin your way to exciting rewards" }
+    },
+    "login": {
+      "login1": { "alt": "Quick and easy login to your account", "title": "Login — Instantly access your secure account" },
+      "login2": { "alt": "Protected access system login prompt", "title": "Secure Login — Fast and safe account entry" },
+      "login3": { "alt": "Smooth re-entry process to your account", "title": "Member Login — Return to your personalized dashboard" }
+    },
+    "home": {
+      "main": { "alt": "Premier destination for online casino entertainment", "title": "Your premier destination for online casino entertainment" },
+      "main1": { "alt": "High-class gaming experience without limits", "title": "A high-class gaming experience without limits" },
+      "main2": { "alt": "Exciting slot machines with lucky symbols", "title": "Slots — Thousands of thrilling machines await" },
+      "main3": { "alt": "Winning sevens on a slot reel with gold coins", "title": "Jackpot Slots — Spin for massive rewards" },
+      "main4": { "alt": "Fully mobile-friendly casino experience", "title": "Mobile Casino — Play anytime, anywhere" }
+    }
   }
 }

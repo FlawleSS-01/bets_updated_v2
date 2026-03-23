@@ -1,55 +1,55 @@
 {
-  "meta": {
-    "title": "App - Mobile Experience",
-    "description": "Explore the App for a seamless mobile experience. Discover its features and download easily.",
-    "keywords": "mobile app, download, android, ios, gaming app, casino app"
-  },
-  "hero": {
-    "badge": "📱 Mobile App",
-    "title": "Your Gateway to Mobile Gaming",
-    "description": "The App offers a comprehensive mobile gaming experience. Enjoy smooth navigation and a wide range of games at your fingertips.",
-    "primaryButtonText": "Download App",
-    "primaryButtonHref": "/app.apk",
-    "primaryButtonIcon": "download"
-  },
-  "sections": [
+  "title": "App - Mobile Experience",
+  "description": "Explore the App for a seamless mobile experience. Discover its features and download easily.",
+  "h1": "App - Your Gateway to Mobile Gaming",
+  "h1Description": "The App offers a comprehensive mobile gaming experience. Enjoy smooth navigation and a wide range of games at your fingertips.",
+  "h1Image": "app1",
+  "stats": [],
+  "blocks": [
     {
-      "type": "content",
-      "title": "Welcome to the App",
-      "description": "Designed to bring the excitement of gaming to your mobile device. Whether commuting or relaxing at home, access top-notch entertainment with just a few taps."
-    },
-    {
-      "type": "features",
-      "title": "App Features",
-      "description": "High-quality graphics, user-friendly interface, extensive game selection and secure payment options.",
-      "items": [
-        { "title": "User-Friendly Interface", "description": "Navigate easily with intuitive design.", "icon": "✨" },
-        { "title": "Secure Transactions", "description": "Your safety is our priority with encrypted payments.", "icon": "🔒" },
-        { "title": "Wide Game Selection", "description": "Choose from a variety of exciting games.", "icon": "🎮" },
-        { "title": "Regular Updates", "description": "Enjoy new features and games added frequently.", "icon": "🔄" }
+      "blockType": "welcome",
+      "elements": [
+        { "type": "h2", "text": "Welcome to the App" },
+        { "type": "paragraph", "text": "Designed to bring the excitement of gaming to your mobile device. Whether commuting or relaxing at home, access top-notch entertainment with just a few taps." },
+        { "type": "image", "src": "app2" }
       ]
     },
     {
-      "type": "steps",
-      "title": "How to Download the App",
-      "description": "Downloading is simple and straightforward. Compatible with both Android and iOS devices.",
-      "items": [
-        { "title": "Visit Our Website", "description": "Go to the homepage to find the download link." },
-        { "title": "Select Your Device", "description": "Choose the correct version for Android or iOS." },
-        { "title": "Download the App", "description": "Click the download button to start the process." },
-        { "title": "Install the App", "description": "Follow the prompts to install on your device." },
-        { "title": "Create an Account", "description": "Sign up or log in to start playing." },
-        { "title": "Start Gaming", "description": "Explore the app and enjoy your favorite games." }
+      "blockType": "features",
+      "elements": [
+        { "type": "h2", "text": "App Features" },
+        { "type": "paragraph", "text": "High-quality graphics, user-friendly interface, extensive game selection and secure payment options." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "User-Friendly Interface", "description": "Navigate easily with intuitive design." },
+            { "title": "Secure Transactions", "description": "Your safety is our priority with encrypted payments." },
+            { "title": "Wide Game Selection", "description": "Choose from a variety of exciting games." },
+            { "title": "Regular Updates", "description": "Enjoy new features and games added frequently." }
+          ]
+        },
+        { "type": "image", "src": "app3" },
+        { "type": "button" }
       ]
     },
     {
-      "type": "cta",
-      "title": "Get the App Now",
-      "description": "Download and start enjoying mobile gaming today.",
-      "primaryButtonText": "Download",
-      "primaryButtonHref": "/app.apk",
-      "secondaryButtonText": "Learn More",
-      "secondaryButtonHref": "/go"
+      "blockType": "download",
+      "elements": [
+        { "type": "h2", "text": "How to Download the App" },
+        { "type": "paragraph", "text": "Downloading is simple and straightforward. Compatible with both Android and iOS devices." },
+        {
+          "type": "list",
+          "items": [
+            { "title": "Visit Our Website", "description": "Go to the homepage to find the download link." },
+            { "title": "Select Your Device", "description": "Choose the correct version for Android or iOS." },
+            { "title": "Download the App", "description": "Click the download button to start the process." },
+            { "title": "Install the App", "description": "Follow the prompts to install on your device." },
+            { "title": "Create an Account", "description": "Sign up or log in to start playing." },
+            { "title": "Start Gaming", "description": "Explore the app and enjoy your favorite games." }
+          ]
+        },
+        { "type": "image", "src": "app4" }
+      ]
     }
   ]
 }

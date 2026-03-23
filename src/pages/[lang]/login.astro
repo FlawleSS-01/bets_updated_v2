@@ -1,14 +1,12 @@
 ---
 import type { MetatagsI } from "@/components/common/MetaTags";
-import ContentSection from "@/components/sections/ContentSection/ContentSection.astro";
-import CtaSection from "@/components/sections/CtaSection/CtaSection.astro";
-import FaqSection from "@/components/sections/FaqSection.astro";
-import FeaturesSection from "@/components/sections/FeaturesSection/FeaturesSection.astro";
-import Hero from "@/components/sections/Hero/Hero.astro";
-import StepsSection from "@/components/sections/StepsSection.astro";
+import Banner from "@/components/common/Banner/Banner.astro";
+import Section from "@/components/blocks/Section.astro";
+import BlocksRenderer from "@/components/blocks/BlocksRenderer.astro";
 import { defaultLng, supportedLanguages } from "@/config/language";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { getText } from "@/locales/getText";
+import { buildSeoSchema } from "@/lib/seoSchema";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (() => {
@@ -20,103 +18,64 @@ const langCode = lang.split("-")[0] || defaultLng.split("-")[0];
 
 const commonTexts = await getText(langCode, "common");
 const metaCanons = await import("P/canon.json");
-const page = await getText(langCode, "login");
+const pageData = await getText(langCode, "login");
 
-const breadcrumbs = [
-  { name: commonTexts.pages.home, url: `/${lang}` },
-  { name: commonTexts.pages.login, url: `/${lang}/login` },
-];
+const baseUrl = import.meta.env.PUBLIC_DOMAIN?.replace(/\/$/, "") || "";
+const brandName = import.meta.env.PUBLIC_BRAND || "";
 
-const schema = {
-  breadcrumbList: {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: breadcrumbs.map((bc, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: bc.name,
-      item: `${import.meta.env.PUBLIC_DOMAIN}${bc.url}`,
-    })),
-  },
-  webPage: {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    name: page.meta.title,
-    description: page.meta.description,
-    url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}/login`,
-    isPartOf: {
-      "@type": "WebSite",
-      name: import.meta.env.PUBLIC_BRAND,
-      url: `${import.meta.env.PUBLIC_DOMAIN}/${lang}`,
-    },
-    inLanguage: lang,
-    datePublished: new Date().toISOString().split("T")[0],
-    dateModified: new Date().toISOString().split("T")[0],
-  },
+const imageMap: Record<string, Record<number, string>> = {
+  login1: { 360: "login1_360", 460: "login1_460", 600: "login1_600" },
+  login2: { 360: "login2_360", 460: "login2_460", 600: "login2_600" },
+  login3: { 360: "login3_360", 460: "login3_460", 600: "login3_600" },
+  login4: { 360: "login4_360", 460: "login4_460", 600: "login4_600" },
 };
 
+const imageDescription = commonTexts.imageDescription?.login || {};
+const getImageMeta = (key: string) => imageDescription[key] || { alt: "", title: "" };
+const getImageSet = (key: string): Record<string, string> | undefined =>
+  imageMap[key] as Record<string, string> | undefined;
+
+const h1ImageSet = getImageSet(pageData.h1Image);
+
+const schema = buildSeoSchema({
+  page: "login",
+  baseUrl,
+  brandName,
+  lang,
+  title: pageData.title,
+  description: pageData.description,
+});
+
 const metaTags: MetatagsI = {
-  title: page.meta.title,
-  descr: page.meta.description,
-  keywords: page.meta.keywords,
+  title: pageData.title,
+  descr: pageData.description,
   metaCanons: (metaCanons as any).login,
 };
 
-let contentIndex = 0;
+const siteSeed = [brandName, baseUrl, lang].join("|");
 ---
 
-<BaseLayout schema={schema} commonTexts={commonTexts} metatags={metaTags}>
-  <Hero
-    lang={lang}
-    badge={page.hero.badge}
-    title={page.hero.title}
-    description={page.hero.description}
-    breadcrumb={breadcrumbs}
-    primaryButtonText={page.hero.primaryButtonText}
-    primaryButtonHref={page.hero.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : page.hero.primaryButtonHref}
-  />
+<BaseLayout commonTexts={commonTexts} schema={schema} metatags={metaTags}>
+  <Banner texts={commonTexts.banner} />
 
-  {page.sections.map((section: any) => {
-    if (section.type === "content") {
-      contentIndex++;
-      return (
-        <ContentSection
-          lang={lang}
-          title={section.title}
-          description={section.description}
-          image={section.image}
-          imageAlt={section.imageAlt}
-          buttonText={section.buttonText}
-          buttonHref={section.buttonHref}
-          reverse={contentIndex % 2 === 0}
-        />
-      );
-    }
-    if (section.type === "features") {
-      return (
-        <FeaturesSection title={section.title} description={section.description} items={section.items} />
-      );
-    }
-    if (section.type === "faq") {
-      return <FaqSection title={section.title} items={section.items} />;
-    }
-    if (section.type === "steps") {
-      return <StepsSection title={section.title} description={section.description} items={section.items} />;
-    }
-    if (section.type === "cta") {
-      return (
-        <CtaSection
-          lang={lang}
-          title={section.title}
-          description={section.description}
-          primaryButtonText={section.primaryButtonText}
-          primaryButtonHref={section.primaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.primaryButtonHref}
-          secondaryButtonText={section.secondaryButtonText}
-          secondaryButtonHref={section.secondaryButtonHref?.endsWith(".apk") ? import.meta.env.PUBLIC_APP : section.secondaryButtonHref}
-          variant="card"
-        />
-      );
-    }
-    return null;
-  })}
+  {(pageData.h1 || pageData.h1Description) && (
+    <Section
+      title={pageData.h1}
+      text={pageData.h1Description}
+      isMainTitle={true}
+      imageSet={h1ImageSet}
+      imageAlt={getImageMeta(pageData.h1Image)?.alt}
+      imageTitle={getImageMeta(pageData.h1Image)?.title}
+      imagePriority={true}
+      showButton={true}
+    />
+  )}
+
+  <BlocksRenderer
+    blocks={pageData.blocks || []}
+    getImageSet={getImageSet}
+    getImageMeta={getImageMeta}
+    seed={siteSeed}
+    pageKey="login"
+  />
 </BaseLayout>

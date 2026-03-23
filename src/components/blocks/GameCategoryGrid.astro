@@ -1,0 +1,46 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+}
+
+const { title = "", description = "", items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || items.length > 0) && (
+  <section class="vblock vgcg">
+    <div class="vcontainer vgcg__grid">
+      <div class="vgcg__left">
+        {title && <h2 class="vgcg__title">{title}</h2>}
+        {description && <p class="vgcg__desc">{description}</p>}
+        {items.length > 0 && (
+          <div class="vgcg__cards">
+            {items.map((it) => (
+              <article class="vgcg__card">
+                <h3 class="vgcg__cardTitle">{it.title}</h3>
+                <p class="vgcg__cardText">{it.description}</p>
+              </article>
+            ))}
+          </div>
+        )}
+        {showButton && (
+          <div class="vgcg__cta"><ButtonsGroup /></div>
+        )}
+      </div>
+      {imgSrc && (
+        <div class="vgcg__right" aria-hidden="true">
+          <img class="vgcg__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+        </div>
+      )}
+    </div>
+  </section>
+)}

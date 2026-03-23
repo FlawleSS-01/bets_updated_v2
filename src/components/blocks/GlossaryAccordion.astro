@@ -1,0 +1,49 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+}
+
+const { title = "", description = "", items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || items.length > 0) && (
+  <section class="vblock vgloss">
+    <div class="vcontainer vgloss__grid">
+      <div class="vgloss__left">
+        {title && <h2 class="vgloss__title">{title}</h2>}
+        {description && <p class="vgloss__desc">{description}</p>}
+        {items.length > 0 && (
+          <div class="vgloss__acc">
+            {items.map((it) => (
+              <details class="vgloss__item">
+                <summary class="vgloss__summary">
+                  <span class="vgloss__q">{it.title}</span>
+                  <span class="vgloss__icon" aria-hidden="true">+</span>
+                </summary>
+                <div class="vgloss__a">{it.description}</div>
+              </details>
+            ))}
+          </div>
+        )}
+        {showButton && (
+          <div class="vgloss__cta"><ButtonsGroup /></div>
+        )}
+      </div>
+      {imgSrc && (
+        <div class="vgloss__right" aria-hidden="true">
+          <img class="vgloss__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+        </div>
+      )}
+    </div>
+  </section>
+)}

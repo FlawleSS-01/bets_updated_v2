@@ -17,7 +17,7 @@ export type CanonDataPageT = {
 export interface MetatagsI {
   title: string;
   descr: string;
-  keywords: string;
+  keywords?: string;
   metaCanons?: CanonDataPageT;
   image?: string;
   imageAlt?: string;

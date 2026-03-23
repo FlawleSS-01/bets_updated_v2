@@ -1,0 +1,84 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  text?: string;
+  paragraphs?: string[];
+  listItems?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  isMainTitle?: boolean;
+  imagePriority?: boolean;
+  showButton?: boolean;
+  reverse?: boolean;
+}
+
+const {
+  title,
+  text,
+  paragraphs = [],
+  listItems = [],
+  imageSet,
+  imageAlt = "",
+  imageTitle = "",
+  isMainTitle = false,
+  imagePriority = false,
+  showButton = false,
+  reverse = false,
+} = Astro.props;
+
+const imgSrc = pickLargest(imageSet);
+---
+
+<section class="hYnoSImClkRQlNw">
+  <div class="PRGliFfylsNouJK">
+    <div class:list={["knSTBEpKQbnwZKI", reverse && "section--reverse"]}>
+      {title && isMainTitle && <h1 class="sgsdgsd">{title}</h1>}
+      {title && !isMainTitle && <h2 class="kFnVgmqaUEjdlHu">{title}</h2>}
+
+      {imgSrc && (
+        <a href="/go" rel="nofollow" class="jnGYfOsDyLXarre">
+          <img
+            src={imgSrc}
+            srcset={srcSetFrom(imageSet)}
+            sizes="(max-width: 360px) 100vw, (max-width: 920px) 420px, 600px"
+            alt={imageAlt}
+            title={imageTitle}
+            loading={imagePriority ? "eager" : "lazy"}
+            fetchpriority={imagePriority ? "high" : "low"}
+            decoding="async"
+            width="600"
+            height="336"
+          />
+        </a>
+      )}
+
+      {paragraphs.length > 0 &&
+        paragraphs.map((p) => <p class="section__text" set:html={p} />)}
+
+      {!paragraphs.length && text && (
+        <p class="section__text" set:html={text} />
+      )}
+
+      {listItems.length > 0 && (
+        <ul class="section__list">
+          {listItems.map((item) => (
+            <li class="section__list-item">
+              <strong>{item.title}</strong>
+              <p>{item.description}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {showButton && (
+        <div class="section__buttons">
+          <ButtonsGroup />
+        </div>
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+  reverse?: boolean;
+}
+
+const { title = "", description = "", items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false, reverse = false } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || description || (items && items.length > 0)) && (
+  <section class="vblock vfeatures2">
+    <div class="vcontainer vfeatures2__grid">
+      <div class:list={["vfeatures2__media", reverse && "is-reverse"]}>
+        <div class="vfeatures2__mediaCard" aria-hidden="true">
+          {imgSrc && (
+            <img class="vfeatures2__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+          )}
+        </div>
+      </div>
+      <div class="vfeatures2__content">
+        {title && <h2 class="vfeatures2__title">{title}</h2>}
+        {description && <p class="vfeatures2__desc">{description}</p>}
+        {items && items.length > 0 && (
+          <div class="vfeatures2__cards">
+            {items.map((it) => (
+              <article class="vfeatures2__card">
+                <h3 class="vfeatures2__cardTitle">{it.title}</h3>
+                <p class="vfeatures2__cardText">{it.description}</p>
+              </article>
+            ))}
+          </div>
+        )}
+        {showButton && (
+          <div class="vfeatures2__cta">
+            <ButtonsGroup />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+)}

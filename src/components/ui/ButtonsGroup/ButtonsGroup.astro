@@ -1,0 +1,29 @@
+---
+interface Props {
+  downloadLabel?: string;
+  loginLabel?: string;
+}
+
+const { downloadLabel = "DOWNLOAD APP", loginLabel = "LOGIN" } = Astro.props;
+const appPath = import.meta.env.PUBLIC_APP || "/app.apk";
+const isApk = appPath.endsWith(".apk");
+---
+
+<div class="wcFgypocOhsdgdX">
+  <a
+    href={appPath}
+    class="button LzGMrweGNaCCJSd XWcVBPcnlRzZTfD"
+    rel="nofollow"
+    {...(isApk ? { download: `${import.meta.env.PUBLIC_BRAND}.apk` } : { target: "_blank" })}
+  >
+    {downloadLabel}
+  </a>
+  <a
+    href="/go"
+    class="button LzGMrweGNaCCJSd XWcVBPcnlRzZTfD"
+    rel="nofollow"
+    target="_blank"
+  >
+    {loginLabel}
+  </a>
+</div>

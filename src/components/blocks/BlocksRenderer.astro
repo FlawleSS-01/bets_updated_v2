@@ -1,0 +1,144 @@
+---
+import { parseBlock, type ParsedBlock } from "@/lib/parseBlock";
+import { pickIndex } from "@/lib/pickVariant";
+import { PAGE_RULES, AUTO_VARIANTS } from "@/lib/variantsMap";
+
+import Section from "./Section.astro";
+import MediaSplit from "./MediaSplit.astro";
+import FeaturesCards from "./FeaturesCards.astro";
+import FeaturesCardsWithImage from "./FeaturesCardsWithImage.astro";
+import CategoryTiles from "./CategoryTiles.astro";
+import PromoCardsGrid from "./PromoCardsGrid.astro";
+import ForgotTipsGrid from "./ForgotTipsGrid.astro";
+import OfferCards3 from "./OfferCards3.astro";
+import LogoMarquee from "./LogoMarquee.astro";
+import StartSpotlight from "./StartSpotlight.astro";
+import GlossaryAccordion from "./GlossaryAccordion.astro";
+import BentoHighlights from "./BentoHighlights.astro";
+import StepsTimeline from "./StepsTimeline.astro";
+import GameCategoryGrid from "./GameCategoryGrid.astro";
+
+interface Props {
+  blocks: any[];
+  getImageSet: (key: string) => Record<string, string> | undefined;
+  getImageMeta: (key: string) => { alt: string; title: string };
+  seed?: string;
+  pageKey?: string;
+}
+
+const { blocks = [], getImageSet, getImageMeta, seed = "seed", pageKey = "page" } = Astro.props;
+
+function supportsVariant(variant: string, p: ParsedBlock): boolean {
+  if (variant === "default") return true;
+  switch (variant) {
+    case "mediaSplit": return !!p.imageSet;
+    case "featuresCards": return Array.isArray(p.items) && p.items.length >= 1;
+    case "featuresCardsWithImage": return !!p.imageSet && Array.isArray(p.items) && p.items.length >= 1;
+    case "categoryTiles": return Array.isArray(p.items) && p.items.length >= 1;
+    case "promoCardsGrid": return (Array.isArray(p.items) && p.items.length >= 2) || (Array.isArray(p.paragraphTexts) && p.paragraphTexts.length >= 1);
+    case "forgotTipsGrid": return !!p.imageSet && Array.isArray(p.items) && p.items.length >= 6;
+    case "offerCards3": return Array.isArray(p.items) && p.items.length >= 3;
+    case "logoMarquee": return Array.isArray(p.items) && p.items.length >= 3;
+    case "startSpotlight": return !!p.imageSet && (!!p.title || !!p.description);
+    case "glossaryAccordion": return Array.isArray(p.items) && p.items.length >= 2;
+    case "bentoHighlights": return Array.isArray(p.items) && p.items.length >= 3;
+    case "stepsTimeline": return Array.isArray(p.items) && p.items.length >= 2;
+    case "gameCategoryGrid": return Array.isArray(p.items) && p.items.length >= 3;
+    default: return true;
+  }
+}
+
+function expandToCandidates(rule: string | string[] | undefined, blockType: string): string[] | null {
+  if (!rule) return null;
+  const arr = Array.isArray(rule) ? rule : [rule];
+  const expanded: string[] = [];
+  arr.forEach((v) => {
+    if (v === "auto") {
+      expanded.push(...(AUTO_VARIANTS[blockType] || ["default"]));
+    } else {
+      expanded.push(v);
+    }
+  });
+  return [...new Set(expanded)];
+}
+
+function pickStable(candidates: string[], blockType: string, index: number): string {
+  if (!candidates?.length) return "default";
+  if (candidates.length === 1) return candidates[0];
+  return candidates[pickIndex(candidates.length, `${seed}|${pageKey}|${blockType}|${index}`)];
+}
+
+type ProcessedItem = { blockType: string; p: ParsedBlock; variant: string; index: number };
+
+const processedBlocks: ProcessedItem[] = blocks
+  .map((block: any, index: number) => {
+    if (!block || !Array.isArray(block.elements)) return null;
+    const blockType = block.blockType || `block_${index}`;
+    const p = parseBlock(block, getImageSet, getImageMeta);
+
+    const baseRules = PAGE_RULES[pageKey] || {};
+    const rule = baseRules[blockType];
+
+    const fallbackAuto = rule == null
+      ? blockType === "powered" ? ["logoMarquee", "default"]
+        : blockType === "bonuses" ? ["promoCardsGrid", "mediaSplit", "default"]
+        : blockType === "popular_games" ? ["offerCards3", "default"]
+        : p.imageSet ? ["mediaSplit", "default"]
+        : Array.isArray(p.items) && p.items.length >= 4 ? ["featuresCards", "default"]
+        : ["default"]
+      : null;
+
+    const candidates = expandToCandidates(rule, blockType) || fallbackAuto || ["default"];
+    const filtered = candidates.filter((v) => supportsVariant(v, p));
+    const variant = pickStable(filtered.length ? filtered : ["default"], blockType, index);
+
+    return { blockType, p, variant, index } as ProcessedItem;
+  })
+  .filter((x): x is ProcessedItem => x !== null);
+---
+
+{processedBlocks.map((item) => {
+  const { p, variant, index } = item;
+
+  if (variant === "mediaSplit") {
+    return <MediaSplit title={p.title} paragraphs={p.paragraphTexts} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} reverse={index % 2 === 1} showButton={p.hasButton} />;
+  }
+  if (variant === "featuresCards") {
+    return <FeaturesCards title={p.title} description={p.description} items={p.items} showButton={p.hasButton} />;
+  }
+  if (variant === "featuresCardsWithImage") {
+    return <FeaturesCardsWithImage title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "categoryTiles") {
+    return <CategoryTiles title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "promoCardsGrid") {
+    return <PromoCardsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "forgotTipsGrid") {
+    return <ForgotTipsGrid title={p.title} paragraphs={p.paragraphTexts} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} />;
+  }
+  if (variant === "offerCards3") {
+    return <OfferCards3 title={p.title} description={p.description} items={p.items} showButton={p.hasButton} />;
+  }
+  if (variant === "logoMarquee") {
+    return <LogoMarquee title={p.title} description={p.description} items={p.items} />;
+  }
+  if (variant === "startSpotlight") {
+    return <StartSpotlight title={p.title} description={p.description} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "glossaryAccordion") {
+    return <GlossaryAccordion title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "bentoHighlights") {
+    return <BentoHighlights title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+  if (variant === "stepsTimeline") {
+    return <StepsTimeline title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} reverse={index % 2 === 1} />;
+  }
+  if (variant === "gameCategoryGrid") {
+    return <GameCategoryGrid title={p.title} description={p.description} items={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+  }
+
+  return <Section title={p.title} paragraphs={p.paragraphTexts} listItems={p.items} imageSet={p.imageSet} imageAlt={p.meta.alt} imageTitle={p.meta.title} showButton={p.hasButton} />;
+})}

@@ -1,0 +1,50 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+  reverse?: boolean;
+}
+
+const { title = "", description = "", items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false, reverse = false } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || items.length > 0) && (
+  <section class="vblock vsteps">
+    <div class:list={["vcontainer vsteps__grid", reverse && "vsteps--rev"]}>
+      <div class="vsteps__left">
+        {title && <h2 class="vsteps__title">{title}</h2>}
+        {description && <p class="vsteps__desc">{description}</p>}
+        {items.length > 0 && (
+          <ol class="vsteps__list">
+            {items.map((it, idx) => (
+              <li class="vsteps__li">
+                <div class="vsteps__num">{idx + 1}</div>
+                <div class="vsteps__body">
+                  <div class="vsteps__t">{it.title}</div>
+                  <div class="vsteps__d">{it.description}</div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        )}
+        {showButton && (
+          <div class="vsteps__cta"><ButtonsGroup /></div>
+        )}
+      </div>
+      {imgSrc && (
+        <div class="vsteps__right" aria-hidden="true">
+          <img class="vsteps__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+        </div>
+      )}
+    </div>
+  </section>
+)}

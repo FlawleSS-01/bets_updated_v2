@@ -1,0 +1,54 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  paragraphs?: string[];
+  items?: { title: string; description: string }[];
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+}
+
+const { title = "", paragraphs = [], items = [], imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const desc = paragraphs?.[0] || "";
+const imgSrc = pickLargest(imageSet);
+
+let cards: { title: string; text: string }[] = [];
+if (Array.isArray(items) && items.length) {
+  cards = items.slice(0, 2).map((it) => ({ title: it?.title || "", text: it?.description || "" }));
+} else {
+  const p1 = paragraphs?.[0] || "";
+  const p2 = paragraphs?.[1] || paragraphs?.[0] || "";
+  cards = [{ title: "", text: p1 }, { title: "", text: p2 }];
+}
+---
+
+{(title || paragraphs.length > 0 || items.length > 0) && (
+  <section class="vblock vpromo">
+    <div class="vcontainer">
+      <header class="vpromo__head">
+        {title && <h2 class="vpromo__title">{title}</h2>}
+        {desc && <p class="vpromo__desc">{desc}</p>}
+      </header>
+      <div class="vpromo__grid">
+        {cards.map((c) => (
+          <article class="vpromo__card">
+            {imgSrc && (
+              <div class="vpromo__media">
+                <img class="vpromo__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+              </div>
+            )}
+            <div class="vpromo__body">
+              {c.title && <h3 class="vpromo__cardTitle">{c.title}</h3>}
+              {c.text && <p class="vpromo__cardText">{c.text}</p>}
+              {showButton && <div class="vpromo__cta"><ButtonsGroup /></div>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

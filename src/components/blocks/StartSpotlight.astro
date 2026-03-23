@@ -1,0 +1,33 @@
+---
+import ButtonsGroup from "@/components/ui/ButtonsGroup/ButtonsGroup.astro";
+import { srcSetFrom, pickLargest } from "@/lib/srcset";
+
+interface Props {
+  title?: string;
+  description?: string;
+  imageSet?: Record<string, string>;
+  imageAlt?: string;
+  imageTitle?: string;
+  showButton?: boolean;
+}
+
+const { title = "", description = "", imageSet, imageAlt = "", imageTitle = "", showButton = false } = Astro.props;
+const imgSrc = pickLargest(imageSet);
+---
+
+{(title || description) && (
+  <section class="vblock vspot">
+    <div class="vcontainer vspot__grid">
+      <div class="vspot__content">
+        {title && <h2 class="vspot__title">{title}</h2>}
+        {description && <p class="vspot__desc">{description}</p>}
+        {showButton && <div class="vspot__cta"><ButtonsGroup /></div>}
+      </div>
+      {imgSrc && (
+        <div class="vspot__media" aria-hidden="true">
+          <img class="vspot__img" src={imgSrc} srcset={srcSetFrom(imageSet)} sizes="(max-width: 920px) 92vw, 520px" alt={imageAlt} title={imageTitle} loading="lazy" decoding="async" width="600" height="336" />
+        </div>
+      )}
+    </div>
+  </section>
+)}
